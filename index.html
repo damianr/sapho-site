@@ -3,10 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="sapho — a plain-files source of truth for your projects. One canonical markdown file per product; every AI you work with reads it before writing a word.">
-<title>sapho — one canonical truth per product</title>
-</head>
-<body>
+<meta name="description" content="sapho: a single source of truth for your products. One canonical markdown file per product; every AI you work with reads it before writing a word.">
+<title>sapho — a single source of truth for your products</title>
 <style>
   :root {
     --paper: #FAF7F5;
@@ -17,6 +15,7 @@
     --hairline: #E4DEDE;
     --code-bg: #F1ECEA;
     --code-ink: #3A3740;
+    --overlay: rgba(28, 27, 34, 0.45);
     --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
     --mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
   }
@@ -30,27 +29,18 @@
       --hairline: #2C2A33;
       --code-bg: #201F27;
       --code-ink: #C9C3CE;
+      --overlay: rgba(0, 0, 0, 0.6);
     }
   }
   :root[data-theme="light"] {
-    --paper: #FAF7F5;
-    --ink: #1C1B22;
-    --muted: #6E6873;
-    --stain: #B3123F;
-    --stain-soft: rgba(179, 18, 63, 0.08);
-    --hairline: #E4DEDE;
-    --code-bg: #F1ECEA;
-    --code-ink: #3A3740;
+    --paper: #FAF7F5; --ink: #1C1B22; --muted: #6E6873; --stain: #B3123F;
+    --stain-soft: rgba(179, 18, 63, 0.08); --hairline: #E4DEDE; --code-bg: #F1ECEA;
+    --code-ink: #3A3740; --overlay: rgba(28, 27, 34, 0.45);
   }
   :root[data-theme="dark"] {
-    --paper: #17161C;
-    --ink: #EDE8E6;
-    --muted: #97909D;
-    --stain: #E4476E;
-    --stain-soft: rgba(228, 71, 110, 0.12);
-    --hairline: #2C2A33;
-    --code-bg: #201F27;
-    --code-ink: #C9C3CE;
+    --paper: #17161C; --ink: #EDE8E6; --muted: #97909D; --stain: #E4476E;
+    --stain-soft: rgba(228, 71, 110, 0.12); --hairline: #2C2A33; --code-bg: #201F27;
+    --code-ink: #C9C3CE; --overlay: rgba(0, 0, 0, 0.6);
   }
 
   * { box-sizing: border-box; }
@@ -65,7 +55,7 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  .wrap { max-width: 60rem; margin: 0 auto; padding: 0 1.5rem; }
+  .wrap { max-width: 64rem; margin: 0 auto; padding: 0 1.5rem; }
   .prose { max-width: 42rem; }
 
   header.site {
@@ -81,15 +71,20 @@
   .site-note { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); letter-spacing: 0.06em; }
 
   /* ---------- hero ---------- */
-  .hero { padding: 5rem 0 3.5rem; }
-  @media (max-width: 640px) { .hero { padding: 3rem 0 2.5rem; } }
+  .hero {
+    padding: 4.5rem 0 3.5rem;
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 30rem);
+    gap: 3rem; align-items: center;
+  }
+  @media (max-width: 900px) { .hero { grid-template-columns: 1fr; padding: 3rem 0 2.5rem; } }
   .hero h1 {
-    font-size: clamp(2.5rem, 6vw, 4.25rem);
-    line-height: 1.04; font-weight: 600; letter-spacing: -0.02em;
-    margin: 0.75rem 0 1.5rem; text-wrap: balance; max-width: 18ch;
+    font-size: clamp(2.4rem, 5.2vw, 3.6rem);
+    line-height: 1.06; font-weight: 600; letter-spacing: -0.02em;
+    margin: 0.75rem 0 1.5rem; text-wrap: balance; max-width: 16ch;
   }
   .hero h1 em { font-style: italic; color: var(--stain); }
-  .hero .lede { font-size: 1.2rem; max-width: 34rem; margin: 0 0 2.25rem; color: var(--ink); }
+  .hero h1 .stop { color: var(--stain); }
+  .hero .lede { font-size: 1.15rem; max-width: 32rem; margin: 0 0 2rem; }
   .lede .quiet { color: var(--muted); }
 
   .key {
@@ -105,29 +100,42 @@
     .reveal { opacity: 1; transform: none; animation: none; }
   }
 
-  /* ---------- install box ---------- */
-  .install-box {
-    border: 1px solid var(--hairline); background: var(--code-bg);
-    border-radius: 6px; padding: 1rem 1.25rem; max-width: 36rem;
+  .cta-row { display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; }
+  button.cta {
+    font-family: var(--mono); font-size: 0.85rem; letter-spacing: 0.06em;
+    color: #FAF7F5; background: var(--stain); border: none; border-radius: 6px;
+    padding: 0.85rem 1.7rem; cursor: pointer;
   }
-  .install-box .key { display: block; margin-bottom: 0.5rem; }
-  .install-line {
-    display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
-  }
-  .install-sentence {
-    font-family: var(--mono); font-size: 0.9rem; color: var(--code-ink);
-    line-height: 1.5; flex: 1 1 16rem; overflow-wrap: anywhere;
-  }
-  button.copy {
-    font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.05em;
-    color: var(--paper); background: var(--stain); border: none; border-radius: 4px;
-    padding: 0.55rem 0.9rem; cursor: pointer; white-space: nowrap;
-  }
-  button.copy:hover { filter: brightness(1.08); }
-  button.copy:focus-visible, .tab:focus-visible, a:focus-visible, summary:focus-visible {
+  button.cta:hover { filter: brightness(1.08); }
+  .cta-sub { font-size: 0.9rem; color: var(--muted); font-style: italic; }
+  button:focus-visible, .tab:focus-visible, a:focus-visible, summary:focus-visible {
     outline: 2px solid var(--stain); outline-offset: 2px;
   }
-  .install-sub { font-size: 0.9rem; color: var(--muted); margin: 0.9rem 0 0; font-style: italic; }
+
+  /* ---------- diagram ---------- */
+  .diagram { width: 100%; }
+  .diagram svg { width: 100%; height: auto; display: block; }
+  .diagram .pill { fill: var(--code-bg); stroke: var(--hairline); }
+  .diagram .pill-label { font-family: var(--mono); font-size: 11px; fill: var(--ink); letter-spacing: 0.03em; }
+  .diagram .side-label { font-family: var(--mono); font-size: 9px; fill: var(--muted); letter-spacing: 0.12em; }
+  .diagram .card { fill: var(--paper); stroke: var(--hairline); stroke-width: 1.25; }
+  .diagram .card-halo { fill: none; stroke: var(--stain); opacity: 0.35; animation: halo 3.2s ease-in-out infinite; transform-origin: 250px 170px; }
+  @keyframes halo { 0%, 100% { opacity: 0.15; } 50% { opacity: 0.45; } }
+  .diagram .fm-line { stroke: var(--stain); stroke-width: 3; stroke-linecap: round; }
+  .diagram .txt-line { stroke: var(--muted); stroke-width: 3; stroke-linecap: round; opacity: 0.55; }
+  .diagram .card-label { font-family: var(--mono); font-size: 10px; fill: var(--muted); letter-spacing: 0.06em; }
+  .diagram .wire { fill: none; stroke: var(--hairline); stroke-width: 1.25; }
+  .diagram .dot-read { fill: var(--muted); }
+  .diagram .dot-write { fill: var(--stain); }
+  .diagram-caption {
+    font-family: var(--mono); font-size: 0.72rem; color: var(--muted);
+    letter-spacing: 0.06em; text-align: center; margin-top: 0.75rem;
+  }
+  .diagram-caption .r { color: var(--stain); }
+  @media (prefers-reduced-motion: reduce) {
+    .diagram .dot { display: none; }
+    .diagram .card-halo { animation: none; opacity: 0.25; }
+  }
 
   /* ---------- sections ---------- */
   section { border-top: 1px solid var(--hairline); padding: 3.25rem 0; }
@@ -164,8 +172,8 @@
   }
   .tab[aria-selected="true"] { border-color: var(--stain); color: var(--stain); background: var(--stain-soft); }
   .panel {
-    border: 1px solid var(--hairline); border-top: none;
-    border-radius: 0 0 6px 6px; padding: 1.5rem 1.6rem;
+    border: 1px solid var(--hairline);
+    padding: 1.5rem 1.6rem;
     border-top: 3px solid var(--stain); margin-top: 0.9rem; border-radius: 6px;
     min-height: 15rem;
   }
@@ -221,14 +229,55 @@
   }
   footer .colophon { font-size: 0.9rem; color: var(--muted); font-style: italic; max-width: 26rem; }
 
+  /* ---------- modal ---------- */
+  .modal-overlay {
+    position: fixed; inset: 0; background: var(--overlay);
+    display: flex; align-items: center; justify-content: center; padding: 1.5rem;
+    z-index: 20; opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: auto; }
+  .modal {
+    background: var(--paper); border: 1px solid var(--hairline); border-radius: 8px;
+    max-width: 33rem; width: 100%; padding: 1.75rem 2rem 2rem; position: relative;
+    transform: translateY(12px); transition: transform 0.2s ease;
+    max-height: 85vh; overflow-y: auto;
+  }
+  .modal-overlay.open .modal { transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .modal-overlay, .modal { transition: none; }
+  }
+  .modal .key { display: block; margin-bottom: 0.75rem; }
+  .modal h3 { font-size: 1.35rem; font-weight: 600; margin: 0 0 0.75rem; letter-spacing: -0.01em; }
+  .modal p { font-size: 0.95rem; margin: 0 0 0.9rem; }
+  .modal p.fine { color: var(--muted); font-size: 0.88rem; font-style: italic; margin: 0.9rem 0 0; }
+  .modal-close {
+    position: absolute; top: 0.9rem; right: 1rem; background: none; border: none;
+    font-family: var(--mono); font-size: 1rem; color: var(--muted); cursor: pointer; padding: 0.3rem;
+  }
+  .modal-close:hover { color: var(--ink); }
+  .prompt-box {
+    background: var(--code-bg); border: 1px solid var(--hairline); border-radius: 6px;
+    padding: 0.9rem 1.1rem; margin: 1.1rem 0 0.9rem;
+    font-family: var(--mono); font-size: 0.85rem; line-height: 1.55; color: var(--code-ink);
+    overflow-wrap: anywhere;
+  }
+  button.copy {
+    font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.05em;
+    color: #FAF7F5; background: var(--stain); border: none; border-radius: 4px;
+    padding: 0.6rem 1.1rem; cursor: pointer;
+  }
+  button.copy:hover { filter: brightness(1.08); }
+
   .toast {
     position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(0.5rem);
     background: var(--ink); color: var(--paper); font-family: var(--mono); font-size: 0.78rem;
     padding: 0.6rem 1.1rem; border-radius: 4px; opacity: 0; pointer-events: none;
-    transition: opacity 0.25s ease, transform 0.25s ease;
+    transition: opacity 0.25s ease, transform 0.25s ease; z-index: 30;
   }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 </style>
+</head>
+<body>
 
 <div class="wrap">
   <header class="site">
@@ -237,19 +286,84 @@
   </header>
 
   <div class="hero" id="top">
-    <span class="key reveal"><b>one_liner:</b> a source of truth for your products</span>
-    <h1 class="reveal d1">Tell your AI <em>once.</em></h1>
-    <p class="lede reveal d2">sapho keeps one canonical truth file per product — the problem, the approach,
-      the decisions and their reasons, the positioning. Every AI you work with reads it before writing
-      a word. <span class="quiet">One source, many renderings, zero re-coaching.</span></p>
-
-    <div class="install-box reveal d3">
-      <span class="key"><b>install:</b> paste one sentence into your AI</span>
-      <div class="install-line">
-        <span class="install-sentence" id="install-sentence">Read this page and set up sapho for me.</span>
-        <button class="copy" id="copy-btn" type="button">copy prompt</button>
+    <div>
+      <span class="key reveal"><b>one_liner:</b> tell your AI once</span>
+      <h1 class="reveal d1">A <em>single</em> source of truth for your products<span class="stop">.</span></h1>
+      <p class="lede reveal d2">One canonical truth file per product: the problem, the approach, the
+        decisions and their reasons, the positioning. Every AI you work with reads it before writing
+        a word. <span class="quiet">One source, many renderings, zero re-coaching.</span></p>
+      <div class="cta-row reveal d3">
+        <button class="cta" type="button" data-open-install>get started</button>
+        <span class="cta-sub">No server. No account. Your files, your machine.</span>
       </div>
-      <p class="install-sub">No server. No account. No subscription. Your files, your git repo, your machine.</p>
+    </div>
+
+    <div class="diagram reveal d3" aria-label="Diagram: multiple AI surfaces reading from and writing to one truth file">
+      <svg viewBox="0 0 500 340" xmlns="http://www.w3.org/2000/svg" role="img">
+        <!-- wires -->
+        <path id="w1" class="wire" d="M118 70 C 170 70, 180 140, 208 152"/>
+        <path id="w2" class="wire" d="M118 170 C 150 170, 160 170, 195 170"/>
+        <path id="w3" class="wire" d="M118 270 C 170 270, 180 200, 208 188"/>
+        <path id="w4" class="wire" d="M382 120 C 340 120, 330 155, 302 162"/>
+        <path id="w5" class="wire" d="M382 220 C 340 220, 330 185, 302 178"/>
+
+        <!-- left pills: agents -->
+        <text class="side-label" x="62" y="38">AGENTS</text>
+        <g>
+          <rect class="pill" x="24" y="52" width="94" height="34" rx="17"/>
+          <text class="pill-label" x="71" y="73" text-anchor="middle">Claude Code</text>
+          <rect class="pill" x="24" y="152" width="94" height="34" rx="17"/>
+          <text class="pill-label" x="71" y="173" text-anchor="middle">Codex CLI</text>
+          <rect class="pill" x="24" y="252" width="94" height="34" rx="17"/>
+          <text class="pill-label" x="71" y="273" text-anchor="middle">Cursor</text>
+        </g>
+
+        <!-- right pills: chat -->
+        <text class="side-label" x="410" y="88">CHAT</text>
+        <g>
+          <rect class="pill" x="382" y="102" width="94" height="34" rx="17"/>
+          <text class="pill-label" x="429" y="123" text-anchor="middle">ChatGPT</text>
+          <rect class="pill" x="382" y="202" width="94" height="34" rx="17"/>
+          <text class="pill-label" x="429" y="223" text-anchor="middle">claude.ai</text>
+        </g>
+
+        <!-- center: the truth file -->
+        <rect class="card-halo" x="199" y="119" width="102" height="102" rx="10"/>
+        <rect class="card" x="205" y="125" width="90" height="90" rx="8"/>
+        <line class="fm-line" x1="220" y1="145" x2="266" y2="145"/>
+        <line class="txt-line" x1="220" y1="163" x2="280" y2="163"/>
+        <line class="txt-line" x1="220" y1="178" x2="272" y2="178"/>
+        <line class="txt-line" x1="220" y1="193" x2="278" y2="193"/>
+        <text class="card-label" x="250" y="238" text-anchor="middle">products/*.md</text>
+
+        <!-- dots: reads (muted, truth to surface) and writes (stain, surface to truth) -->
+        <circle class="dot dot-read" r="3">
+          <animateMotion dur="3.6s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear">
+            <mpath href="#w1"/>
+          </animateMotion>
+        </circle>
+        <circle class="dot dot-write" r="3">
+          <animateMotion dur="4.2s" begin="0.9s" repeatCount="indefinite">
+            <mpath href="#w2"/>
+          </animateMotion>
+        </circle>
+        <circle class="dot dot-read" r="3">
+          <animateMotion dur="3.9s" begin="1.6s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear">
+            <mpath href="#w3"/>
+          </animateMotion>
+        </circle>
+        <circle class="dot dot-read" r="3">
+          <animateMotion dur="3.4s" begin="0.5s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear">
+            <mpath href="#w4"/>
+          </animateMotion>
+        </circle>
+        <circle class="dot dot-write" r="3">
+          <animateMotion dur="4.6s" begin="2.2s" repeatCount="indefinite">
+            <mpath href="#w5"/>
+          </animateMotion>
+        </circle>
+      </svg>
+      <div class="diagram-caption">every surface reads it <span class="r">·</span> every surface writes back</div>
     </div>
   </div>
 
@@ -257,11 +371,11 @@
     <span class="key"><b>problem:</b></span>
     <div class="prose">
       <h2>Your AI already builds your products. It just doesn't know them.</h2>
-      <p>Every session starts from zero. You ask for a landing page, a pitch, an App Store description —
-        and first you coach: no, it's <em>for</em> parents, not doctors; no, we killed that feature, and for
-        a good reason; no, that's not how we talk about it. The knowledge exists. It's just scattered
-        across old chats, tracker tickets, and your head — so you pay the explaining tax on every output,
-        forever.</p>
+      <p>Every session starts from zero. You ask for a landing page, a pitch, an App Store
+        description, and first you coach. No, it's <em>for</em> parents, not doctors. No, we killed
+        that feature, and for a good reason. No, that's not how we talk about it. The knowledge
+        exists; it's just scattered across old chats, tracker tickets, and your head. So you pay
+        the explaining tax on every output, forever.</p>
       <p class="muted">Trackers hold what you're doing. Nothing holds what's <em>true</em>.</p>
     </div>
   </section>
@@ -287,15 +401,15 @@
       <div class="move">
         <span class="n">03 · reconcile</span>
         <h3>Truth folds back in</h3>
-        <p>When a real decision happens mid-session, your agent flags it and folds it into the file —
+        <p>When a real decision happens mid-session, your agent flags it, folds it into the file,
           and rejects status noise. Contradictions get surfaced, never silently overwritten.</p>
       </div>
     </div>
     <pre class="file" aria-label="Example truth file"><span class="cm"># products/safeyum.md</span>
 <span class="fm">---
 name: SafeYum
-one_liner: An AI-first iOS food journal — describe meals in natural
-  language, it tracks safe/trigger foods for the whole family.
+one_liner: An AI-first iOS food journal. Describe meals in natural
+  language; it tracks safe/trigger foods for the whole family.
 audience: Parents managing kids' food sensitivities (FPIES first)
 status: building
 tracker: linear.app/…        # state lives there, not here
@@ -306,7 +420,7 @@ Input friction is the product problem, not analysis. With a
 reacting child on your hands, nobody opens a form…
 
 ## Key decisions &amp; rationale
-- The AI proposes, the parent confirms — wrong attributions are
+- The AI proposes, the parent confirms. Wrong attributions are
   costly in a food-safety context, so the correction UI is core…</pre>
   </section>
 
@@ -314,7 +428,8 @@ reacting child on your hands, nobody opens a form…
     <span class="key"><b>renderings:</b></span>
     <div class="prose">
       <h2>One source. Many renderings.</h2>
-      <p>The file is the substrate; the AI is the transformer. Same facts, any shape — no coaching between them.</p>
+      <p>The file is the substrate; the AI is the transformer. Same facts, any shape, no coaching
+        in between.</p>
     </div>
     <div class="tabs" role="tablist" aria-label="Renderings of one truth file">
       <button class="tab" role="tab" id="tab-source" aria-selected="true" aria-controls="panel-source" type="button">source file</button>
@@ -324,34 +439,34 @@ reacting child on your hands, nobody opens a form…
     </div>
 
     <div class="panel" id="panel-source" role="tabpanel" aria-labelledby="tab-source">
-      <pre class="mono-block"><span class="fm">one_liner:</span> AI-first food journal — natural language in,
-  structured safe/trigger tracking out
+      <pre class="mono-block"><span class="fm">one_liner:</span> AI-first food journal. Natural language in,
+  structured safe/trigger tracking out.
 <span class="fm">insight:</span>  input friction kills food journals; a kept journal
   is the only one that can find patterns
-<span class="fm">decision:</span> insights refuse to run below 5 entries / 2 dates —
+<span class="fm">decision:</span> insights refuse to run below 5 entries / 2 dates;
   one bad early correlation destroys parent trust
-<span class="fm">wedge:</span>    FPIES families — highest pain, most underserved,
-  founder is one of them</pre>
+<span class="fm">wedge:</span>    FPIES families. Highest pain, most underserved,
+  founder is one of them.</pre>
     </div>
     <div class="panel" id="panel-marketing" role="tabpanel" aria-labelledby="tab-marketing" hidden>
       <h4>Just say what happened. SafeYum keeps the record.</h4>
       <p>"Mia had oatmeal with banana, seemed fussy after her nap." That's the whole entry. SafeYum
-        turns it into a structured journal — the meal, the ingredients, who it was — while you get
+        turns it into a structured journal: the meal, the ingredients, who it was, while you get
         back to your kid. Built by an FPIES parent who lived the alternative: a paper diary and a
         guess.</p>
     </div>
     <div class="panel" id="panel-portfolio" role="tabpanel" aria-labelledby="tab-portfolio" hidden>
-      <h4>SafeYum — reframing the problem as capture, not analysis</h4>
+      <h4>SafeYum: reframing the problem as capture, not analysis</h4>
       <p>Everyone in this space competes on better charts. I went after the reason the charts stay
         empty: nobody fills out forms mid-crisis. Conversational input, parse-confirm-save, and an
-        insights engine that deliberately refuses to speak until the data can support it — because
-        one bad early correlation costs the only asset that matters, trust.</p>
+        insights engine that deliberately refuses to speak until the data can support it, because
+        one bad early correlation costs the only asset that matters: trust.</p>
     </div>
     <div class="panel" id="panel-pitch" role="tabpanel" aria-labelledby="tab-pitch" hidden>
       <h4>The wedge is the worst night of a parent's year.</h4>
       <p>FPIES families run food trials with a paper diary because every journaling app demands
-        structured input at exactly the moment structure is impossible. SafeYum owns that moment —
-        conversational capture the incumbents can't retrofit — then expands to the general
+        structured input at exactly the moment structure is impossible. SafeYum owns that moment
+        with conversational capture the incumbents can't retrofit, then expands to the general
         food-journaling market from a position of earned trust.</p>
     </div>
     <p class="demo-caption">All four generated from the same file. The tabs are the coaching you no longer do.</p>
@@ -363,14 +478,14 @@ reacting child on your hands, nobody opens a form…
       <h2>A format and a policy. Deliberately not software.</h2>
       <p>There is nothing to run and nothing to keep alive. The intelligence is rented at read time
         from the AI client you already pay for; sapho is the substrate it reads. Formats outlive
-        software — markdown in a git repo will still open in twenty years, in whatever client
+        software. Markdown in a git repo will still open in twenty years, in whatever client
         replaces the ones we use now.</p>
     </div>
     <div class="ledger">
       <div class="yes">
         <h3>what you install</h3>
         <ul>
-          <li>A schema — frontmatter + four sections</li>
+          <li>A schema: frontmatter + four sections</li>
           <li>A read-first convention for your agent</li>
           <li>A reconcile skill with judgment rules</li>
           <li>A git repo that accumulates truth</li>
@@ -394,14 +509,14 @@ reacting child on your hands, nobody opens a form…
       <h2>Two rules keep it from rotting.</h2>
       <div class="rule">
         <h3>Truth, not state</h3>
-        <p>The file holds what's true — problem, approach, decisions with reasons, positioning. What's
-          in progress, blocked, or next lives in your tracker, linked but never replicated. The urge
-          to put a task in the truth file is the signal it belongs elsewhere.</p>
+        <p>The file holds what's true: problem, approach, decisions with reasons, positioning.
+          What's in progress, blocked, or next lives in your tracker, linked but never replicated.
+          The urge to put a task in the truth file is the signal it belongs elsewhere.</p>
       </div>
       <div class="rule">
         <h3>One product, one file</h3>
-        <p>A consistent schema per product, so every rendering — and every agent — knows exactly where
-          to look and what it will find.</p>
+        <p>A consistent schema per product, so every rendering, and every agent, knows exactly
+          where to look and what it will find.</p>
       </div>
     </div>
   </section>
@@ -410,16 +525,13 @@ reacting child on your hands, nobody opens a form…
     <span class="key"><b>install:</b></span>
     <div class="prose">
       <h2>Installation is a sentence.</h2>
-      <p>Copy the prompt, paste it into Claude Code, and approve the plan it shows you. Your agent
-        will set up the corpus repo, add the conventions at user level, and interview you about your
-        first product. Fifteen minutes later you own a truth file — and the installer was also the
+      <p>Your AI does the installing; you approve its plan. Agentic tools like Claude Code set up
+        everything on your machine. Chat apps like ChatGPT connect through GitHub and walk you
+        through it. Fifteen minutes later you own a truth file, and the installer was also the
         tutorial.</p>
-    </div>
-    <div class="install-box" style="margin-top: 1.5rem;">
-      <span class="key"><b>prompt:</b></span>
-      <div class="install-line">
-        <span class="install-sentence" id="install-sentence-2">Read this page and set up sapho for me.</span>
-        <button class="copy" id="copy-btn-2" type="button">copy prompt</button>
+      <div class="cta-row" style="margin-top: 1.5rem;">
+        <button class="cta" type="button" data-open-install>get started</button>
+        <span class="cta-sub">Works with Claude Code, ChatGPT, and any AI that can read a page.</span>
       </div>
     </div>
 
@@ -434,15 +546,16 @@ reacting child on your hands, nobody opens a form…
           the human through creating the corpus as a GitHub repo and connect to it; writes become
           commits or PRs. If you have no tools, walk the human through the setup and generate the
           files for them to save. Before writing anything, present the human a short plan of every
-          file you will create or modify and get an explicit yes. Merge with existing configuration
-          — never overwrite. All steps are idempotent; if a piece already exists, skip it and say
-          so. spec_version: 2.</p>
+          file you will create or modify and get an explicit yes. Merge with existing configuration;
+          never overwrite. All steps are idempotent: if a piece already exists, skip it and say so.
+          spec_version: 2. Full spec: /install.md</p>
 
         <h5>## 1 — Corpus repo</h5>
         <p>Ask where the corpus should live (default <code>~/sapho</code>). Create it as a git repo with
           <code>products/</code> and a README describing the schema below and the two rules: (1) truth,
-          not state — no tasks, progress, or blockers in truth files; that belongs in their tracker;
-          (2) one product = one file.</p>
+          not state: no tasks, progress, or blockers in truth files; that belongs in their tracker;
+          (2) one product = one file. Offer to create a private GitHub remote so chat surfaces can
+          read and write the same corpus.</p>
         <pre>---
 name:       &lt;product name&gt;
 one_liner:  &lt;one sentence: what it is&gt;
@@ -462,23 +575,23 @@ tags:       [&lt;...&gt;]
           (for Claude Code: <code>~/.claude/CLAUDE.md</code>), stating: (a) every product has one truth
           file at <code>&lt;corpus&gt;/products/&lt;slug&gt;.md</code>; (b) read it in full before generating
           anything product-facing, and never invent product facts; (c) when starting substantive work in
-          a project with no SOT pointer in its CLAUDE.md, offer to interview the user and create one,
-          then add a pointer line to that project's CLAUDE.md; (d) when a session surfaces a durable
-          decision with a rationale, flag it and offer to reconcile at a natural pause; (e) never write
-          tasks, progress, or status into a truth file.</p>
+          a project with no SOT pointer in its instructions, offer to interview the user and create one,
+          then add a pointer line; (d) when a session surfaces a durable decision with a rationale, flag
+          it and offer to reconcile at a natural pause; (e) never write tasks, progress, or status into
+          a truth file.</p>
 
         <h5>## 3 — Reconcile skill</h5>
         <p>Install a user-level skill named <code>reconcile</code> (for Claude Code:
           <code>~/.claude/skills/reconcile/SKILL.md</code>) with these judgment rules: break input into
           claims; classify each as confirms (no edit) / new truth (add to the one section it belongs) /
           evolves (rewrite in place, don't append a duplicate) / conflicts (surface to the human, never
-          silently overwrite; record instructive reversals as decisions with the why) / state (reject —
+          silently overwrite; record instructive reversals as decisions with the why) / state (reject;
           point to the tracker) / noise (drop). Durability test: still true and worth knowing in six
           months? Minimal edits only; decisions require a rationale; commit with
           <code>reconcile(&lt;product&gt;): &lt;summary&gt;</code>; never push without being asked.</p>
 
         <h5>## 4 — First product</h5>
-        <p>Interview the human about one product they're working on — the problem and the non-obvious
+        <p>Interview the human about one product they're working on: the problem and the non-obvious
           insight behind it; how it works and what makes the approach different; the decisions they'd
           have to re-explain and why they made them; how they talk about it and what it's against.
           Write <code>products/&lt;slug&gt;.md</code> per the schema, show it to them, then commit.
@@ -492,37 +605,55 @@ tags:       [&lt;...&gt;]
     <div class="prose">
       <div class="faq-item">
         <h3>Where does my data live?</h3>
-        <p>On your machine, in a git repo you own. Nothing is hosted, transmitted, or shared unless
-          you push it somewhere yourself.</p>
+        <p>On your machine, in a git repo you own. Add a private GitHub remote and chat surfaces
+          like ChatGPT can read and write the same corpus through their connectors. Nothing is
+          hosted by sapho; there is no sapho server.</p>
       </div>
       <div class="faq-item">
         <h3>Which AI clients does it work with?</h3>
-        <p>Claude Code is first-class — the conventions install into it directly. Any other client
-          works the moment it can read a file or a paste: each truth file is ~70 lines and
-          self-contained by design.</p>
+        <p>Claude Code and other agentic tools are first-class: the conventions install directly.
+          ChatGPT and claude.ai connect through GitHub. Anything else works the moment it can read
+          a file or a paste; each truth file is about 70 lines and self-contained by design.</p>
       </div>
       <div class="faq-item">
         <h3>What happens if I stop using it?</h3>
-        <p>You keep a folder of well-written markdown about your products. There's no export because
-          there's no lock-in — the files were always the product.</p>
+        <p>You keep a folder of well-written markdown about your products. There's no export
+          because there's no lock-in; the files were always the product.</p>
       </div>
       <div class="faq-item">
         <h3>What about teams?</h3>
-        <p>The corpus is git-native, so multi-player is a remote away: pull requests become the gate
-          on truth, code owners own product files, and agents propose instead of write. Add process
-          when you need it; the files never change.</p>
+        <p>The corpus is git-native, so multi-player is a remote away: pull requests become the
+          gate on truth, code owners own product files, and agents propose instead of write. Add
+          process when you need it; the files never change.</p>
       </div>
     </div>
   </section>
 
   <footer class="site">
     <span class="wordmark">sapho<span class="stop">.</span></span>
-    <span class="colophon">Named for the juice that sharpens a mentat's mind.
-      One canonical truth, many renderings — the AI is the transformer, the file is the source.</span>
+    <span class="colophon">Named for the juice that sharpens a mentat's mind. One canonical truth,
+      many renderings. The AI is the transformer; the file is the source.</span>
   </footer>
 </div>
 
-<div class="toast" id="toast" role="status">copied — paste it into Claude Code</div>
+<div class="modal-overlay" id="install-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal">
+    <button class="modal-close" type="button" aria-label="Close" data-close-install>✕</button>
+    <span class="key"><b>install:</b></span>
+    <h3 id="modal-title">Give this to your AI.</h3>
+    <p>Paste the sentence below into Claude Code, ChatGPT, or any AI you work with. It reads this
+      site's setup spec and does the installing itself: a small git repo of truth files on your
+      machine, plus the conventions that make every future session read them.</p>
+    <p>Your AI shows you the plan before touching anything, and you approve it. No account is
+      created and nothing leaves your machine unless you choose to add a GitHub remote.</p>
+    <div class="prompt-box" id="install-sentence">Read this page and set up sapho for me.</div>
+    <button class="copy" id="copy-btn" type="button">copy prompt</button>
+    <p class="fine">Agentic tools do the full install. Chat apps walk you through their version.
+      Fifteen minutes, either way.</p>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status">copied — paste it into your AI</div>
 
 <script>
   (function () {
@@ -538,30 +669,49 @@ tags:       [&lt;...&gt;]
       });
     });
 
+    // Install modal
+    var overlay = document.getElementById('install-modal');
+    var lastFocus = null;
+    function openModal() {
+      lastFocus = document.activeElement;
+      overlay.classList.add('open');
+      document.getElementById('copy-btn').focus();
+    }
+    function closeModal() {
+      overlay.classList.remove('open');
+      if (lastFocus) lastFocus.focus();
+    }
+    Array.prototype.forEach.call(document.querySelectorAll('[data-open-install]'), function (btn) {
+      btn.addEventListener('click', openModal);
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-close-install]'), function (btn) {
+      btn.addEventListener('click', closeModal);
+    });
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+    });
+
     // Copy install prompt (uses this page's own URL)
     var toast = document.getElementById('toast');
     var toastTimer;
     function promptText() {
-      return 'Read ' + location.href.split('#')[0] + ' and set up sapho for me.';
+      return 'Read ' + location.origin + '/install.md and set up sapho for me.';
     }
     function showToast() {
       toast.classList.add('show');
       clearTimeout(toastTimer);
       toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 2200);
     }
-    function wireCopy(btnId, sentenceId) {
-      var btn = document.getElementById(btnId);
-      var sentence = document.getElementById(sentenceId);
-      sentence.textContent = promptText();
-      btn.addEventListener('click', function () {
-        var text = promptText();
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(text).then(showToast, function () { fallbackCopy(text); });
-        } else {
-          fallbackCopy(text);
-        }
-      });
-    }
+    document.getElementById('install-sentence').textContent = promptText();
+    document.getElementById('copy-btn').addEventListener('click', function () {
+      var text = promptText();
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(showToast, function () { fallbackCopy(text); });
+      } else {
+        fallbackCopy(text);
+      }
+    });
     function fallbackCopy(text) {
       var ta = document.createElement('textarea');
       ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
@@ -569,8 +719,6 @@ tags:       [&lt;...&gt;]
       try { document.execCommand('copy'); showToast(); } catch (e) {}
       document.body.removeChild(ta);
     }
-    wireCopy('copy-btn', 'install-sentence');
-    wireCopy('copy-btn-2', 'install-sentence-2');
   })();
 </script>
 </body>
