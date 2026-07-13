@@ -513,15 +513,16 @@
       <div class="spec-body">
         <h5>## To the installing agent</h5>
         <p>You are setting up sapho: a plain-files product source of truth. First, detect your own
-          capabilities. If you can write files on the user's machine (agentic CLI or IDE), perform
-          the full install below, adapting paths to your platform's user-level instruction file.
-          If you can read/write GitHub but not the user's disk (chat apps with connectors), guide
-          the human through creating the corpus as a GitHub repo and connect to it; writes become
-          commits or PRs. If you have no tools, walk the human through the setup and generate the
-          files for them to save. Before writing anything, present the human a short plan of every
-          file you will create or modify and get an explicit yes. Merge with existing configuration;
-          never overwrite. All steps are idempotent: if a piece already exists, skip it and say so.
-          spec_version: 2. Full spec: /install.md</p>
+          capabilities: full install if you can write files on the user's machine, GitHub-connected
+          setup if you can only reach repos, guided walkthrough if you have no tools. Second,
+          <b>discover before you create</b>: sapho may already be installed by another tool or in a
+          non-default location — check the user-level instruction files for a sapho section, probe
+          ~/sapho and ~/Projects/sapho, and ask. If a corpus exists you are CONNECTING, not
+          installing: pull latest, report freshness, point your platform's conventions at the
+          existing path. Never create a second corpus. Before writing anything, present the human a
+          short plan of every file you will create or modify and get an explicit yes. Merge with
+          existing configuration; never overwrite. All steps are idempotent: if a piece already
+          exists, skip it and say so. spec_version: 3. Full spec: /install.md</p>
 
         <h5>## 1 · Corpus repo</h5>
         <p>Ask where the corpus should live (default <code>~/sapho</code>). Create it as a git repo with

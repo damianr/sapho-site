@@ -5,7 +5,7 @@ projects. One canonical markdown file per product; every AI the user works with 
 before generating anything about that product. There is no server and no account — the
 system is a schema, a few conventions, and a git repo the user owns.
 
-spec_version: 2
+spec_version: 3
 
 ## Step 0 — Detect your capabilities
 
@@ -21,6 +21,31 @@ In every case: before creating or modifying anything, show the user a short plan
 file you will touch and get an explicit yes. Merge with existing configuration — never
 overwrite. All steps are idempotent: if a piece already exists, skip it and say so.
 Never send the user's data anywhere they didn't direct.
+
+## Step 1 — Discover before you create (do NOT skip)
+
+sapho may already be installed — by another AI tool, on another surface, or in a
+non-default location. Creating a second corpus is the worst failure mode of this install:
+it silently forks the user's truth. So before proposing any plan, look for an existing
+corpus:
+
+1. **Read the user-level instruction files** on this machine (any that exist:
+   `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/AGENTS.md`, editor rules files). A
+   "Product Source of Truth (sapho)" section names the corpus path — follow it.
+2. **Probe likely locations**: `~/sapho`, `~/Projects/sapho`, or any repo containing
+   `products/*.md` alongside a README or CONNECT.md describing this schema.
+3. **Ask the user**: "Do you already use sapho anywhere — this machine, GitHub, another
+   AI tool?"
+
+**If a corpus exists → you are CONNECTING, not installing.** Never create a new corpus or
+move the existing one. Instead: pull the latest if it has a git remote and report its
+freshness (last commit date; flag truth files untouched for 45+ days as worth a re-read);
+add YOUR platform's conventions pointing at the existing path (section in your instruction
+file, reconcile skill if your platform supports skills); and confirm the connection by
+listing the products you can now see. If the corpus has no GitHub remote yet, offer to add
+one so the user's other surfaces can reach it.
+
+**If nothing is found → proceed with a fresh install below.**
 
 ## The schema (all tiers)
 
