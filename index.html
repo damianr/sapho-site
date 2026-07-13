@@ -516,13 +516,15 @@
           capabilities: full install if you can write files on the user's machine, GitHub-connected
           setup if you can only reach repos, guided walkthrough if you have no tools. Second,
           <b>discover before you create</b>: sapho may already be installed by another tool or in a
-          non-default location — check the user-level instruction files for a sapho section, probe
-          ~/sapho and ~/Projects/sapho, and ask. If a corpus exists you are CONNECTING, not
-          installing: pull latest, report freshness, point your platform's conventions at the
-          existing path. Never create a second corpus. Before writing anything, present the human a
-          short plan of every file you will create or modify and get an explicit yes. Merge with
-          existing configuration; never overwrite. All steps are idempotent: if a piece already
-          exists, skip it and say so. spec_version: 3. Full spec: /install.md</p>
+          non-default location — always ask the user ("have you used sapho before?"), check the
+          user-level instruction files for a sapho section, and probe ~/sapho and ~/Projects/sapho.
+          If a corpus exists you are CONNECTING, not installing: read the corpus's own CONNECT.md
+          (it outranks this page), pull latest, report freshness, point your platform's conventions
+          at the existing path. Never create a second corpus. Tool failures never lower the bar:
+          fix mangled URLs (strip *, quotes, brackets) and resume the failed step, don't restart.
+          Before writing anything, present the human a short plan of every file you will create or
+          modify and get an explicit yes. Merge with existing configuration; never overwrite. All
+          steps are idempotent. spec_version: 4. Full spec: /install.md</p>
 
         <h5>## 1 · Corpus repo</h5>
         <p>Ask where the corpus should live (default <code>~/sapho</code>). Create it as a git repo with

@@ -5,7 +5,7 @@ projects. One canonical markdown file per product; every AI the user works with 
 before generating anything about that product. There is no server and no account — the
 system is a schema, a few conventions, and a git repo the user owns.
 
-spec_version: 3
+spec_version: 4
 
 ## Step 0 — Detect your capabilities
 
@@ -26,16 +26,22 @@ Never send the user's data anywhere they didn't direct.
 
 sapho may already be installed — by another AI tool, on another surface, or in a
 non-default location. Creating a second corpus is the worst failure mode of this install:
-it silently forks the user's truth. So before proposing any plan, look for an existing
-corpus:
+it silently forks the user's truth. So before proposing any plan:
 
-1. **Read the user-level instruction files** on this machine (any that exist:
+1. **Ask the user first** — one question, always: "Have you used sapho before — on this
+   machine, in another AI tool, or on GitHub?" Asking costs one message; forking truth
+   costs the whole system.
+2. **Read the user-level instruction files** on this machine (any that exist:
    `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/AGENTS.md`, editor rules files). A
    "Product Source of Truth (sapho)" section names the corpus path — follow it.
-2. **Probe likely locations**: `~/sapho`, `~/Projects/sapho`, or any repo containing
-   `products/*.md` alongside a README or CONNECT.md describing this schema.
-3. **Ask the user**: "Do you already use sapho anywhere — this machine, GitHub, another
-   AI tool?"
+3. **Probe likely locations**: `~/sapho`, `~/Projects/sapho`, or any repo containing
+   `products/*.md` alongside a README or CONNECT.md describing this schema. On chat
+   surfaces, check the user's GitHub for such a repo (commonly named `sapho`).
+
+**If you have filesystem access and find a local corpus, stop using this web page.**
+Read `<corpus>/CONNECT.md` and follow it instead — it is the corpus's own connection
+spec, it's newer than any cached copy of this page, and it needs no further web access
+(so flaky web tooling can't break the setup).
 
 **If a corpus exists → you are CONNECTING, not installing.** Never create a new corpus or
 move the existing one. Instead: pull the latest if it has a git remote and report its
@@ -122,6 +128,19 @@ Two rules keep the corpus from rotting:
 4. **Writes.** Apply the reconcile rules above and propose edits as commits or pull
    requests — minimal diffs, never a full-file rewrite for a small change. The user merges;
    the merge is the moment a claim becomes truth.
+
+## Resilience rules (all tiers)
+
+- **URL hygiene.** If fetching a URL you were given fails, strip wrapping characters
+  first — markdown emphasis (`*`), angle brackets, quotes, trailing punctuation — and
+  retry. Mirrors of this spec: `/install.md`, `/install`, and `/llms.txt` (pointer).
+- **Don't restart, resume.** If one step fails (a fetch, a tool error), report exactly
+  which step and continue with the rest. Never respond to a tool failure by silently
+  starting over or switching modes.
+- **Tool failures never lower the bar.** A broken fetch or search is not a reason to
+  skip discovery, skip the plan-approval step, or guess at file contents.
+- **Prefer local over remote.** Once a corpus is on the machine, its own files
+  (CONNECT.md, README) outrank this page for that machine.
 
 ## Rules of conduct (all tiers)
 
