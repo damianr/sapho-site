@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="sapho: a single source of truth for your products. One canonical markdown file per product; every AI you work with reads it before writing a word.">
-<title>sapho — a single source of truth for your products</title>
+<title>sapho: a single source of truth for your products</title>
 <style>
   :root {
     --paper: #FAF7F5;
@@ -536,7 +536,7 @@ reacting child on your hands, nobody opens a form…
     </div>
 
     <details class="spec">
-      <summary>setup spec — the part your agent reads (plain version at <a href="/install.md" style="color: inherit;">/install.md</a>)</summary>
+      <summary>setup spec · the part your agent reads (plain version at <a href="/install.md" style="color: inherit;">/install.md</a>)</summary>
       <div class="spec-body">
         <h5>## To the installing agent</h5>
         <p>You are setting up sapho: a plain-files product source of truth. First, detect your own
@@ -550,7 +550,7 @@ reacting child on your hands, nobody opens a form…
           never overwrite. All steps are idempotent: if a piece already exists, skip it and say so.
           spec_version: 2. Full spec: /install.md</p>
 
-        <h5>## 1 — Corpus repo</h5>
+        <h5>## 1 · Corpus repo</h5>
         <p>Ask where the corpus should live (default <code>~/sapho</code>). Create it as a git repo with
           <code>products/</code> and a README describing the schema below and the two rules: (1) truth,
           not state: no tasks, progress, or blockers in truth files; that belongs in their tracker;
@@ -570,7 +570,7 @@ tags:       [&lt;...&gt;]
 ## Key decisions &amp; rationale
 ## Positioning</pre>
 
-        <h5>## 2 — User-level conventions</h5>
+        <h5>## 2 · User-level conventions</h5>
         <p>Append a "Product Source of Truth (sapho)" section to the user's global agent instructions
           (for Claude Code: <code>~/.claude/CLAUDE.md</code>), stating: (a) every product has one truth
           file at <code>&lt;corpus&gt;/products/&lt;slug&gt;.md</code>; (b) read it in full before generating
@@ -580,7 +580,7 @@ tags:       [&lt;...&gt;]
           it and offer to reconcile at a natural pause; (e) never write tasks, progress, or status into
           a truth file.</p>
 
-        <h5>## 3 — Reconcile skill</h5>
+        <h5>## 3 · Reconcile skill</h5>
         <p>Install a user-level skill named <code>reconcile</code> (for Claude Code:
           <code>~/.claude/skills/reconcile/SKILL.md</code>) with these judgment rules: break input into
           claims; classify each as confirms (no edit) / new truth (add to the one section it belongs) /
@@ -590,7 +590,7 @@ tags:       [&lt;...&gt;]
           months? Minimal edits only; decisions require a rationale; commit with
           <code>reconcile(&lt;product&gt;): &lt;summary&gt;</code>; never push without being asked.</p>
 
-        <h5>## 4 — First product</h5>
+        <h5>## 4 · First product</h5>
         <p>Interview the human about one product they're working on: the problem and the non-obvious
           insight behind it; how it works and what makes the approach different; the decisions they'd
           have to re-explain and why they made them; how they talk about it and what it's against.
@@ -653,7 +653,7 @@ tags:       [&lt;...&gt;]
   </div>
 </div>
 
-<div class="toast" id="toast" role="status">copied — paste it into your AI</div>
+<div class="toast" id="toast" role="status">copied · paste it into your AI</div>
 
 <script>
   (function () {
