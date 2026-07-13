@@ -256,6 +256,11 @@
     padding: 0.6rem 1.1rem; cursor: pointer;
   }
   button.copy:hover { filter: brightness(1.1); }
+  button.copy.alt {
+    background: none; color: var(--accent-purple); border: 1px solid var(--border-default);
+    margin-left: 0.5rem;
+  }
+  button.copy.alt:hover { border-color: var(--accent-purple); }
 
   .toast {
     position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(0.5rem);
@@ -624,8 +629,10 @@ tags:       [&lt;...&gt;]
       created and nothing leaves your machine unless you choose to add a GitHub remote.</p>
     <div class="prompt-box" id="install-sentence">Read this page and set up sapho for me.</div>
     <button class="copy" id="copy-btn" type="button">copy prompt</button>
+    <button class="copy alt" id="copy-spec-btn" type="button">copy full spec instead</button>
     <p class="fine">Agentic tools do the full install. Chat apps walk you through their version.
-      Fifteen minutes, either way.</p>
+      Fifteen minutes, either way. If your AI can't fetch the URL, use "copy full spec" and
+      paste the whole thing.</p>
   </div>
 </div>
 
@@ -684,7 +691,7 @@ tags:       [&lt;...&gt;]
     var toast = document.getElementById('toast');
     var toastTimer;
     function promptText() {
-      return 'Read ' + location.origin + '/install.md and set up sapho for me.';
+      return 'Read ' + location.origin + '/install and set up sapho for me.';
     }
     function showToast() {
       toast.classList.add('show');
@@ -692,13 +699,22 @@ tags:       [&lt;...&gt;]
       toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 2200);
     }
     document.getElementById('install-sentence').textContent = promptText();
-    document.getElementById('copy-btn').addEventListener('click', function () {
-      var text = promptText();
+    function copyText(text) {
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(showToast, function () { fallbackCopy(text); });
       } else {
         fallbackCopy(text);
       }
+    }
+    document.getElementById('copy-btn').addEventListener('click', function () {
+      copyText(promptText());
+    });
+    document.getElementById('copy-spec-btn').addEventListener('click', function () {
+      fetch('/install.md').then(function (r) { return r.text(); }).then(function (spec) {
+        copyText('Set up sapho for me by following this spec:\n\n' + spec);
+      }, function () {
+        copyText(promptText());
+      });
     });
     function fallbackCopy(text) {
       var ta = document.createElement('textarea');

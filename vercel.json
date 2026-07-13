@@ -1,18 +1,15 @@
 {
   "cleanUrls": true,
-  "rewrites": [
-    { "source": "/install", "destination": "/install.md" }
-  ],
   "headers": [
     {
-      "source": "/install(\\.md)?",
+      "source": "/install.md",
       "headers": [
         { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
         { "key": "Content-Disposition", "value": "inline" }
       ]
     },
     {
-      "source": "/llms.txt",
+      "source": "/(robots|llms).txt",
       "headers": [{ "key": "Content-Type", "value": "text/plain; charset=utf-8" }]
     }
   ]
