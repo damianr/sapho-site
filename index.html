@@ -155,14 +155,6 @@
   .move .n { font-family: var(--mono); font-size: 0.72rem; color: var(--stain); letter-spacing: 0.08em; display: block; margin-bottom: 0.6rem; }
   .move p { font-size: 0.95rem; color: var(--muted); margin: 0; }
 
-  pre.file {
-    background: var(--code-bg); border: 1px solid var(--hairline); border-radius: 6px;
-    padding: 1.1rem 1.3rem; overflow-x: auto; margin: 2rem 0 0;
-    font-family: var(--mono); font-size: 0.82rem; line-height: 1.6; color: var(--code-ink);
-  }
-  pre.file .fm { color: var(--stain); }
-  pre.file .cm { color: var(--muted); }
-
   /* ---------- demo ---------- */
   .tabs { display: flex; gap: 0.4rem; flex-wrap: wrap; margin: 1.75rem 0 0; }
   .tab {
@@ -183,21 +175,6 @@
   .panel .mono-block { font-family: var(--mono); font-size: 0.8rem; line-height: 1.65; color: var(--code-ink); white-space: pre; overflow-x: auto; margin: 0; }
   .panel .mono-block .fm { color: var(--stain); }
   .demo-caption { font-size: 0.88rem; color: var(--muted); font-style: italic; margin-top: 0.9rem; }
-
-  /* ---------- what it is ---------- */
-  .ledger { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 2rem; }
-  @media (max-width: 640px) { .ledger { grid-template-columns: 1fr; } }
-  .ledger h3 { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em; font-weight: 400; margin: 0 0 0.8rem; }
-  .ledger .yes h3 { color: var(--stain); }
-  .ledger .no h3 { color: var(--muted); }
-  .ledger ul { margin: 0; padding: 0; list-style: none; }
-  .ledger li { padding: 0.45rem 0; border-bottom: 1px solid var(--hairline); font-size: 0.97rem; }
-  .ledger .no li { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--hairline); text-decoration-thickness: 1px; }
-
-  /* ---------- rules ---------- */
-  .rule { margin-top: 1.75rem; padding-left: 1.25rem; border-left: 2px solid var(--stain); }
-  .rule h3 { margin: 0 0 0.4rem; font-size: 1.15rem; font-weight: 600; }
-  .rule p { color: var(--muted); font-size: 0.97rem; margin: 0; }
 
   /* ---------- agent spec ---------- */
   details.spec { margin-top: 2rem; border: 1px solid var(--hairline); border-radius: 6px; }
@@ -405,23 +382,6 @@
           and rejects status noise. Contradictions get surfaced, never silently overwritten.</p>
       </div>
     </div>
-    <pre class="file" aria-label="Example truth file"><span class="cm"># products/safeyum.md</span>
-<span class="fm">---
-name: SafeYum
-one_liner: An AI-first iOS food journal. Describe meals in natural
-  language; it tracks safe/trigger foods for the whole family.
-audience: Parents managing kids' food sensitivities (FPIES first)
-status: building
-tracker: linear.app/…        # state lives there, not here
----</span>
-
-## Problem &amp; insight
-Input friction is the product problem, not analysis. With a
-reacting child on your hands, nobody opens a form…
-
-## Key decisions &amp; rationale
-- The AI proposes, the parent confirms. Wrong attributions are
-  costly in a food-safety context, so the correction UI is core…</pre>
   </section>
 
   <section>
@@ -470,55 +430,6 @@ reacting child on your hands, nobody opens a form…
         food-journaling market from a position of earned trust.</p>
     </div>
     <p class="demo-caption">All four generated from the same file. The tabs are the coaching you no longer do.</p>
-  </section>
-
-  <section>
-    <span class="key"><b>what_it_is:</b></span>
-    <div class="prose">
-      <h2>A format and a policy. Deliberately not software.</h2>
-      <p>There is nothing to run and nothing to keep alive. The intelligence is rented at read time
-        from the AI client you already pay for; sapho is the substrate it reads. Formats outlive
-        software. Markdown in a git repo will still open in twenty years, in whatever client
-        replaces the ones we use now.</p>
-    </div>
-    <div class="ledger">
-      <div class="yes">
-        <h3>what you install</h3>
-        <ul>
-          <li>A schema: frontmatter + four sections</li>
-          <li>A read-first convention for your agent</li>
-          <li>A reconcile skill with judgment rules</li>
-          <li>A git repo that accumulates truth</li>
-        </ul>
-      </div>
-      <div class="no">
-        <h3>what you don't</h3>
-        <ul>
-          <li>A server</li>
-          <li>A database</li>
-          <li>An account</li>
-          <li>A vector store, an API key, a bill</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <span class="key"><b>rules:</b></span>
-    <div class="prose">
-      <h2>Two rules keep it from rotting.</h2>
-      <div class="rule">
-        <h3>Truth, not state</h3>
-        <p>The file holds what's true: problem, approach, decisions with reasons, positioning.
-          What's in progress, blocked, or next lives in your tracker, linked but never replicated.
-          The urge to put a task in the truth file is the signal it belongs elsewhere.</p>
-      </div>
-      <div class="rule">
-        <h3>One product, one file</h3>
-        <p>A consistent schema per product, so every rendering, and every agent, knows exactly
-          where to look and what it will find.</p>
-      </div>
-    </div>
   </section>
 
   <section>
