@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="sapho — a plain-files source of truth for your projects. One canonical markdown file per product; every AI you work with reads it before writing a word.">
+<title>sapho — one canonical truth per product</title>
+</head>
+<body>
+<style>
+  :root {
+    --paper: #FAF7F5;
+    --ink: #1C1B22;
+    --muted: #6E6873;
+    --stain: #B3123F;
+    --stain-soft: rgba(179, 18, 63, 0.08);
+    --hairline: #E4DEDE;
+    --code-bg: #F1ECEA;
+    --code-ink: #3A3740;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #17161C;
+      --ink: #EDE8E6;
+      --muted: #97909D;
+      --stain: #E4476E;
+      --stain-soft: rgba(228, 71, 110, 0.12);
+      --hairline: #2C2A33;
+      --code-bg: #201F27;
+      --code-ink: #C9C3CE;
+    }
+  }
+  :root[data-theme="light"] {
+    --paper: #FAF7F5;
+    --ink: #1C1B22;
+    --muted: #6E6873;
+    --stain: #B3123F;
+    --stain-soft: rgba(179, 18, 63, 0.08);
+    --hairline: #E4DEDE;
+    --code-bg: #F1ECEA;
+    --code-ink: #3A3740;
+  }
+  :root[data-theme="dark"] {
+    --paper: #17161C;
+    --ink: #EDE8E6;
+    --muted: #97909D;
+    --stain: #E4476E;
+    --stain-soft: rgba(228, 71, 110, 0.12);
+    --hairline: #2C2A33;
+    --code-bg: #201F27;
+    --code-ink: #C9C3CE;
+  }
+
+  * { box-sizing: border-box; }
+  html { background: var(--paper); }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 60rem; margin: 0 auto; padding: 0 1.5rem; }
+  .prose { max-width: 42rem; }
+
+  header.site {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding: 1.75rem 0 0;
+  }
+  .wordmark {
+    font-family: var(--serif);
+    font-size: 1.5rem; font-weight: 600; letter-spacing: -0.01em;
+    color: var(--ink); text-decoration: none;
+  }
+  .wordmark .stop { color: var(--stain); }
+  .site-note { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); letter-spacing: 0.06em; }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 5rem 0 3.5rem; }
+  @media (max-width: 640px) { .hero { padding: 3rem 0 2.5rem; } }
+  .hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4.25rem);
+    line-height: 1.04; font-weight: 600; letter-spacing: -0.02em;
+    margin: 0.75rem 0 1.5rem; text-wrap: balance; max-width: 18ch;
+  }
+  .hero h1 em { font-style: italic; color: var(--stain); }
+  .hero .lede { font-size: 1.2rem; max-width: 34rem; margin: 0 0 2.25rem; color: var(--ink); }
+  .lede .quiet { color: var(--muted); }
+
+  .key {
+    font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em;
+    color: var(--muted); text-transform: lowercase;
+  }
+  .key b { color: var(--stain); font-weight: 400; }
+
+  .reveal { opacity: 0; transform: translateY(10px); animation: rise 0.7s ease forwards; }
+  .reveal.d1 { animation-delay: 0.08s; } .reveal.d2 { animation-delay: 0.18s; } .reveal.d3 { animation-delay: 0.3s; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; animation: none; }
+  }
+
+  /* ---------- install box ---------- */
+  .install-box {
+    border: 1px solid var(--hairline); background: var(--code-bg);
+    border-radius: 6px; padding: 1rem 1.25rem; max-width: 36rem;
+  }
+  .install-box .key { display: block; margin-bottom: 0.5rem; }
+  .install-line {
+    display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+  }
+  .install-sentence {
+    font-family: var(--mono); font-size: 0.9rem; color: var(--code-ink);
+    line-height: 1.5; flex: 1 1 16rem; overflow-wrap: anywhere;
+  }
+  button.copy {
+    font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.05em;
+    color: var(--paper); background: var(--stain); border: none; border-radius: 4px;
+    padding: 0.55rem 0.9rem; cursor: pointer; white-space: nowrap;
+  }
+  button.copy:hover { filter: brightness(1.08); }
+  button.copy:focus-visible, .tab:focus-visible, a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--stain); outline-offset: 2px;
+  }
+  .install-sub { font-size: 0.9rem; color: var(--muted); margin: 0.9rem 0 0; font-style: italic; }
+
+  /* ---------- sections ---------- */
+  section { border-top: 1px solid var(--hairline); padding: 3.25rem 0; }
+  section .key { display: block; margin-bottom: 1.25rem; }
+  h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; letter-spacing: -0.015em;
+    line-height: 1.15; margin: 0 0 1rem; text-wrap: balance;
+  }
+  p { margin: 0 0 1rem; }
+  section p:last-child { margin-bottom: 0; }
+  .muted { color: var(--muted); }
+
+  /* ---------- how it works ---------- */
+  .moves { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 2rem; }
+  @media (max-width: 760px) { .moves { grid-template-columns: 1fr; } }
+  .move h3 { font-size: 1.1rem; margin: 0 0 0.5rem; font-weight: 600; }
+  .move .n { font-family: var(--mono); font-size: 0.72rem; color: var(--stain); letter-spacing: 0.08em; display: block; margin-bottom: 0.6rem; }
+  .move p { font-size: 0.95rem; color: var(--muted); margin: 0; }
+
+  pre.file {
+    background: var(--code-bg); border: 1px solid var(--hairline); border-radius: 6px;
+    padding: 1.1rem 1.3rem; overflow-x: auto; margin: 2rem 0 0;
+    font-family: var(--mono); font-size: 0.82rem; line-height: 1.6; color: var(--code-ink);
+  }
+  pre.file .fm { color: var(--stain); }
+  pre.file .cm { color: var(--muted); }
+
+  /* ---------- demo ---------- */
+  .tabs { display: flex; gap: 0.4rem; flex-wrap: wrap; margin: 1.75rem 0 0; }
+  .tab {
+    font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.04em;
+    background: none; border: 1px solid var(--hairline); border-radius: 4px;
+    color: var(--muted); padding: 0.45rem 0.85rem; cursor: pointer;
+  }
+  .tab[aria-selected="true"] { border-color: var(--stain); color: var(--stain); background: var(--stain-soft); }
+  .panel {
+    border: 1px solid var(--hairline); border-top: none;
+    border-radius: 0 0 6px 6px; padding: 1.5rem 1.6rem;
+    border-top: 3px solid var(--stain); margin-top: 0.9rem; border-radius: 6px;
+    min-height: 15rem;
+  }
+  .panel[hidden] { display: none; }
+  .panel h4 { margin: 0 0 0.6rem; font-size: 1.15rem; font-weight: 600; }
+  .panel p { font-size: 0.97rem; }
+  .panel .mono-block { font-family: var(--mono); font-size: 0.8rem; line-height: 1.65; color: var(--code-ink); white-space: pre; overflow-x: auto; margin: 0; }
+  .panel .mono-block .fm { color: var(--stain); }
+  .demo-caption { font-size: 0.88rem; color: var(--muted); font-style: italic; margin-top: 0.9rem; }
+
+  /* ---------- what it is ---------- */
+  .ledger { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 2rem; }
+  @media (max-width: 640px) { .ledger { grid-template-columns: 1fr; } }
+  .ledger h3 { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em; font-weight: 400; margin: 0 0 0.8rem; }
+  .ledger .yes h3 { color: var(--stain); }
+  .ledger .no h3 { color: var(--muted); }
+  .ledger ul { margin: 0; padding: 0; list-style: none; }
+  .ledger li { padding: 0.45rem 0; border-bottom: 1px solid var(--hairline); font-size: 0.97rem; }
+  .ledger .no li { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--hairline); text-decoration-thickness: 1px; }
+
+  /* ---------- rules ---------- */
+  .rule { margin-top: 1.75rem; padding-left: 1.25rem; border-left: 2px solid var(--stain); }
+  .rule h3 { margin: 0 0 0.4rem; font-size: 1.15rem; font-weight: 600; }
+  .rule p { color: var(--muted); font-size: 0.97rem; margin: 0; }
+
+  /* ---------- agent spec ---------- */
+  details.spec { margin-top: 2rem; border: 1px solid var(--hairline); border-radius: 6px; }
+  details.spec summary {
+    font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.05em; color: var(--stain);
+    padding: 0.9rem 1.2rem; cursor: pointer; list-style: none;
+  }
+  details.spec summary::before { content: "▸ "; }
+  details.spec[open] summary::before { content: "▾ "; }
+  details.spec .spec-body {
+    border-top: 1px solid var(--hairline); padding: 1.2rem 1.4rem;
+    font-family: var(--mono); font-size: 0.8rem; line-height: 1.7; color: var(--code-ink);
+    overflow-x: auto;
+  }
+  .spec-body h5 { font-size: 0.8rem; margin: 1.4rem 0 0.4rem; color: var(--stain); font-weight: 400; }
+  .spec-body h5:first-child { margin-top: 0; }
+  .spec-body p, .spec-body ol { margin: 0 0 0.6rem; }
+  .spec-body ol { padding-left: 1.4rem; }
+  .spec-body pre { background: var(--code-bg); border-radius: 4px; padding: 0.8rem 1rem; overflow-x: auto; margin: 0.5rem 0 0.8rem; }
+
+  /* ---------- faq ---------- */
+  .faq-item { margin-top: 1.6rem; }
+  .faq-item h3 { font-size: 1.05rem; font-weight: 600; margin: 0 0 0.35rem; }
+  .faq-item p { color: var(--muted); font-size: 0.97rem; margin: 0; }
+
+  footer.site {
+    border-top: 1px solid var(--hairline); padding: 2.5rem 0 3.5rem;
+    display: flex; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; align-items: baseline;
+  }
+  footer .colophon { font-size: 0.9rem; color: var(--muted); font-style: italic; max-width: 26rem; }
+
+  .toast {
+    position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(0.5rem);
+    background: var(--ink); color: var(--paper); font-family: var(--mono); font-size: 0.78rem;
+    padding: 0.6rem 1.1rem; border-radius: 4px; opacity: 0; pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+
+<div class="wrap">
+  <header class="site">
+    <a class="wordmark" href="#top">sapho<span class="stop">.</span></a>
+    <span class="site-note">a convention, not an app</span>
+  </header>
+
+  <div class="hero" id="top">
+    <span class="key reveal"><b>one_liner:</b> a source of truth for your products</span>
+    <h1 class="reveal d1">Tell your AI <em>once.</em></h1>
+    <p class="lede reveal d2">sapho keeps one canonical truth file per product — the problem, the approach,
+      the decisions and their reasons, the positioning. Every AI you work with reads it before writing
+      a word. <span class="quiet">One source, many renderings, zero re-coaching.</span></p>
+
+    <div class="install-box reveal d3">
+      <span class="key"><b>install:</b> paste one sentence into your AI</span>
+      <div class="install-line">
+        <span class="install-sentence" id="install-sentence">Read this page and set up sapho for me.</span>
+        <button class="copy" id="copy-btn" type="button">copy prompt</button>
+      </div>
+      <p class="install-sub">No server. No account. No subscription. Your files, your git repo, your machine.</p>
+    </div>
+  </div>
+
+  <section>
+    <span class="key"><b>problem:</b></span>
+    <div class="prose">
+      <h2>Your AI already builds your products. It just doesn't know them.</h2>
+      <p>Every session starts from zero. You ask for a landing page, a pitch, an App Store description —
+        and first you coach: no, it's <em>for</em> parents, not doctors; no, we killed that feature, and for
+        a good reason; no, that's not how we talk about it. The knowledge exists. It's just scattered
+        across old chats, tracker tickets, and your head — so you pay the explaining tax on every output,
+        forever.</p>
+      <p class="muted">Trackers hold what you're doing. Nothing holds what's <em>true</em>.</p>
+    </div>
+  </section>
+
+  <section>
+    <span class="key"><b>how_it_works:</b></span>
+    <div class="prose">
+      <h2>A file, a habit, and the AI you already have.</h2>
+    </div>
+    <div class="moves">
+      <div class="move">
+        <span class="n">01 · interview</span>
+        <h3>One file per product</h3>
+        <p>Your agent interviews you once and writes the truth file: machine-readable frontmatter,
+          four sections of prose. Ten minutes. It lives in a plain git repo you own.</p>
+      </div>
+      <div class="move">
+        <span class="n">02 · ground</span>
+        <h3>Every output starts read</h3>
+        <p>A user-level convention makes any AI session read the file in full before generating
+          anything product-facing. Facts come from the file; voice and format are per-output.</p>
+      </div>
+      <div class="move">
+        <span class="n">03 · reconcile</span>
+        <h3>Truth folds back in</h3>
+        <p>When a real decision happens mid-session, your agent flags it and folds it into the file —
+          and rejects status noise. Contradictions get surfaced, never silently overwritten.</p>
+      </div>
+    </div>
+    <pre class="file" aria-label="Example truth file"><span class="cm"># products/safeyum.md</span>
+<span class="fm">---
+name: SafeYum
+one_liner: An AI-first iOS food journal — describe meals in natural
+  language, it tracks safe/trigger foods for the whole family.
+audience: Parents managing kids' food sensitivities (FPIES first)
+status: building
+tracker: linear.app/…        # state lives there, not here
+---</span>
+
+## Problem &amp; insight
+Input friction is the product problem, not analysis. With a
+reacting child on your hands, nobody opens a form…
+
+## Key decisions &amp; rationale
+- The AI proposes, the parent confirms — wrong attributions are
+  costly in a food-safety context, so the correction UI is core…</pre>
+  </section>
+
+  <section>
+    <span class="key"><b>renderings:</b></span>
+    <div class="prose">
+      <h2>One source. Many renderings.</h2>
+      <p>The file is the substrate; the AI is the transformer. Same facts, any shape — no coaching between them.</p>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Renderings of one truth file">
+      <button class="tab" role="tab" id="tab-source" aria-selected="true" aria-controls="panel-source" type="button">source file</button>
+      <button class="tab" role="tab" id="tab-marketing" aria-selected="false" aria-controls="panel-marketing" type="button">marketing page</button>
+      <button class="tab" role="tab" id="tab-portfolio" aria-selected="false" aria-controls="panel-portfolio" type="button">portfolio entry</button>
+      <button class="tab" role="tab" id="tab-pitch" aria-selected="false" aria-controls="panel-pitch" type="button">pitch</button>
+    </div>
+
+    <div class="panel" id="panel-source" role="tabpanel" aria-labelledby="tab-source">
+      <pre class="mono-block"><span class="fm">one_liner:</span> AI-first food journal — natural language in,
+  structured safe/trigger tracking out
+<span class="fm">insight:</span>  input friction kills food journals; a kept journal
+  is the only one that can find patterns
+<span class="fm">decision:</span> insights refuse to run below 5 entries / 2 dates —
+  one bad early correlation destroys parent trust
+<span class="fm">wedge:</span>    FPIES families — highest pain, most underserved,
+  founder is one of them</pre>
+    </div>
+    <div class="panel" id="panel-marketing" role="tabpanel" aria-labelledby="tab-marketing" hidden>
+      <h4>Just say what happened. SafeYum keeps the record.</h4>
+      <p>"Mia had oatmeal with banana, seemed fussy after her nap." That's the whole entry. SafeYum
+        turns it into a structured journal — the meal, the ingredients, who it was — while you get
+        back to your kid. Built by an FPIES parent who lived the alternative: a paper diary and a
+        guess.</p>
+    </div>
+    <div class="panel" id="panel-portfolio" role="tabpanel" aria-labelledby="tab-portfolio" hidden>
+      <h4>SafeYum — reframing the problem as capture, not analysis</h4>
+      <p>Everyone in this space competes on better charts. I went after the reason the charts stay
+        empty: nobody fills out forms mid-crisis. Conversational input, parse-confirm-save, and an
+        insights engine that deliberately refuses to speak until the data can support it — because
+        one bad early correlation costs the only asset that matters, trust.</p>
+    </div>
+    <div class="panel" id="panel-pitch" role="tabpanel" aria-labelledby="tab-pitch" hidden>
+      <h4>The wedge is the worst night of a parent's year.</h4>
+      <p>FPIES families run food trials with a paper diary because every journaling app demands
+        structured input at exactly the moment structure is impossible. SafeYum owns that moment —
+        conversational capture the incumbents can't retrofit — then expands to the general
+        food-journaling market from a position of earned trust.</p>
+    </div>
+    <p class="demo-caption">All four generated from the same file. The tabs are the coaching you no longer do.</p>
+  </section>
+
+  <section>
+    <span class="key"><b>what_it_is:</b></span>
+    <div class="prose">
+      <h2>A format and a policy. Deliberately not software.</h2>
+      <p>There is nothing to run and nothing to keep alive. The intelligence is rented at read time
+        from the AI client you already pay for; sapho is the substrate it reads. Formats outlive
+        software — markdown in a git repo will still open in twenty years, in whatever client
+        replaces the ones we use now.</p>
+    </div>
+    <div class="ledger">
+      <div class="yes">
+        <h3>what you install</h3>
+        <ul>
+          <li>A schema — frontmatter + four sections</li>
+          <li>A read-first convention for your agent</li>
+          <li>A reconcile skill with judgment rules</li>
+          <li>A git repo that accumulates truth</li>
+        </ul>
+      </div>
+      <div class="no">
+        <h3>what you don't</h3>
+        <ul>
+          <li>A server</li>
+          <li>A database</li>
+          <li>An account</li>
+          <li>A vector store, an API key, a bill</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <span class="key"><b>rules:</b></span>
+    <div class="prose">
+      <h2>Two rules keep it from rotting.</h2>
+      <div class="rule">
+        <h3>Truth, not state</h3>
+        <p>The file holds what's true — problem, approach, decisions with reasons, positioning. What's
+          in progress, blocked, or next lives in your tracker, linked but never replicated. The urge
+          to put a task in the truth file is the signal it belongs elsewhere.</p>
+      </div>
+      <div class="rule">
+        <h3>One product, one file</h3>
+        <p>A consistent schema per product, so every rendering — and every agent — knows exactly where
+          to look and what it will find.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <span class="key"><b>install:</b></span>
+    <div class="prose">
+      <h2>Installation is a sentence.</h2>
+      <p>Copy the prompt, paste it into Claude Code, and approve the plan it shows you. Your agent
+        will set up the corpus repo, add the conventions at user level, and interview you about your
+        first product. Fifteen minutes later you own a truth file — and the installer was also the
+        tutorial.</p>
+    </div>
+    <div class="install-box" style="margin-top: 1.5rem;">
+      <span class="key"><b>prompt:</b></span>
+      <div class="install-line">
+        <span class="install-sentence" id="install-sentence-2">Read this page and set up sapho for me.</span>
+        <button class="copy" id="copy-btn-2" type="button">copy prompt</button>
+      </div>
+    </div>
+
+    <details class="spec">
+      <summary>setup spec — the part your agent reads (plain version at <a href="/install.md" style="color: inherit;">/install.md</a>)</summary>
+      <div class="spec-body">
+        <h5>## To the installing agent</h5>
+        <p>You are setting up sapho: a plain-files product source of truth. First, detect your own
+          capabilities. If you can write files on the user's machine (agentic CLI or IDE), perform
+          the full install below, adapting paths to your platform's user-level instruction file.
+          If you can read/write GitHub but not the user's disk (chat apps with connectors), guide
+          the human through creating the corpus as a GitHub repo and connect to it; writes become
+          commits or PRs. If you have no tools, walk the human through the setup and generate the
+          files for them to save. Before writing anything, present the human a short plan of every
+          file you will create or modify and get an explicit yes. Merge with existing configuration
+          — never overwrite. All steps are idempotent; if a piece already exists, skip it and say
+          so. spec_version: 2.</p>
+
+        <h5>## 1 — Corpus repo</h5>
+        <p>Ask where the corpus should live (default <code>~/sapho</code>). Create it as a git repo with
+          <code>products/</code> and a README describing the schema below and the two rules: (1) truth,
+          not state — no tasks, progress, or blockers in truth files; that belongs in their tracker;
+          (2) one product = one file.</p>
+        <pre>---
+name:       &lt;product name&gt;
+one_liner:  &lt;one sentence: what it is&gt;
+audience:   &lt;who it's for&gt;
+status:     exploring | building | live | paused
+tracker:    &lt;link to tracker project&gt;
+links:      &lt;optional: repo, domains&gt;
+tags:       [&lt;...&gt;]
+---
+## Problem &amp; insight
+## How it works
+## Key decisions &amp; rationale
+## Positioning</pre>
+
+        <h5>## 2 — User-level conventions</h5>
+        <p>Append a "Product Source of Truth (sapho)" section to the user's global agent instructions
+          (for Claude Code: <code>~/.claude/CLAUDE.md</code>), stating: (a) every product has one truth
+          file at <code>&lt;corpus&gt;/products/&lt;slug&gt;.md</code>; (b) read it in full before generating
+          anything product-facing, and never invent product facts; (c) when starting substantive work in
+          a project with no SOT pointer in its CLAUDE.md, offer to interview the user and create one,
+          then add a pointer line to that project's CLAUDE.md; (d) when a session surfaces a durable
+          decision with a rationale, flag it and offer to reconcile at a natural pause; (e) never write
+          tasks, progress, or status into a truth file.</p>
+
+        <h5>## 3 — Reconcile skill</h5>
+        <p>Install a user-level skill named <code>reconcile</code> (for Claude Code:
+          <code>~/.claude/skills/reconcile/SKILL.md</code>) with these judgment rules: break input into
+          claims; classify each as confirms (no edit) / new truth (add to the one section it belongs) /
+          evolves (rewrite in place, don't append a duplicate) / conflicts (surface to the human, never
+          silently overwrite; record instructive reversals as decisions with the why) / state (reject —
+          point to the tracker) / noise (drop). Durability test: still true and worth knowing in six
+          months? Minimal edits only; decisions require a rationale; commit with
+          <code>reconcile(&lt;product&gt;): &lt;summary&gt;</code>; never push without being asked.</p>
+
+        <h5>## 4 — First product</h5>
+        <p>Interview the human about one product they're working on — the problem and the non-obvious
+          insight behind it; how it works and what makes the approach different; the decisions they'd
+          have to re-explain and why they made them; how they talk about it and what it's against.
+          Write <code>products/&lt;slug&gt;.md</code> per the schema, show it to them, then commit.
+          Do not push anywhere; do not send anything off the machine.</p>
+      </div>
+    </details>
+  </section>
+
+  <section>
+    <span class="key"><b>faq:</b></span>
+    <div class="prose">
+      <div class="faq-item">
+        <h3>Where does my data live?</h3>
+        <p>On your machine, in a git repo you own. Nothing is hosted, transmitted, or shared unless
+          you push it somewhere yourself.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Which AI clients does it work with?</h3>
+        <p>Claude Code is first-class — the conventions install into it directly. Any other client
+          works the moment it can read a file or a paste: each truth file is ~70 lines and
+          self-contained by design.</p>
+      </div>
+      <div class="faq-item">
+        <h3>What happens if I stop using it?</h3>
+        <p>You keep a folder of well-written markdown about your products. There's no export because
+          there's no lock-in — the files were always the product.</p>
+      </div>
+      <div class="faq-item">
+        <h3>What about teams?</h3>
+        <p>The corpus is git-native, so multi-player is a remote away: pull requests become the gate
+          on truth, code owners own product files, and agents propose instead of write. Add process
+          when you need it; the files never change.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site">
+    <span class="wordmark">sapho<span class="stop">.</span></span>
+    <span class="colophon">Named for the juice that sharpens a mentat's mind.
+      One canonical truth, many renderings — the AI is the transformer, the file is the source.</span>
+  </footer>
+</div>
+
+<div class="toast" id="toast" role="status">copied — paste it into Claude Code</div>
+
+<script>
+  (function () {
+    // Tabs
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        tabs.forEach(function (t) {
+          var on = t === tab;
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+          document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+        });
+      });
+    });
+
+    // Copy install prompt (uses this page's own URL)
+    var toast = document.getElementById('toast');
+    var toastTimer;
+    function promptText() {
+      return 'Read ' + location.href.split('#')[0] + ' and set up sapho for me.';
+    }
+    function showToast() {
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 2200);
+    }
+    function wireCopy(btnId, sentenceId) {
+      var btn = document.getElementById(btnId);
+      var sentence = document.getElementById(sentenceId);
+      sentence.textContent = promptText();
+      btn.addEventListener('click', function () {
+        var text = promptText();
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showToast, function () { fallbackCopy(text); });
+        } else {
+          fallbackCopy(text);
+        }
+      });
+    }
+    function fallbackCopy(text) {
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); showToast(); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+    wireCopy('copy-btn', 'install-sentence');
+    wireCopy('copy-btn-2', 'install-sentence-2');
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+# sapho
+
+> A plain-files source of truth for your projects. One canonical markdown file per product;
+> every AI you work with reads it before generating anything. No server, no account — a
+> schema, a few conventions, and a git repo you own.
+
+## Install
+
+- [Installation spec for AI agents](/install.md): capability-detecting setup instructions
+  for agentic tools (Claude Code, Codex, Cursor) and GitHub-connected chat apps (ChatGPT,
+  claude.ai). If a user asked you to "set up sapho," read that file and follow it.
