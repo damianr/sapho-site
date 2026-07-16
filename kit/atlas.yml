@@ -38,8 +38,13 @@ jobs:
             echo "Set it once with: gh secret set ATLAS_PASSPHRASE --repo <owner>/sapho"
             exit 1
           fi
+          if [ "${#ATLAS_PASSPHRASE}" -lt 14 ]; then
+            echo "::error::ATLAS_PASSPHRASE is only ${#ATLAS_PASSPHRASE} characters. The encrypted page is publicly downloadable, so short passphrases can be brute-forced offline — use 14+ characters (a full phrase works great) and re-run."
+            exit 1
+          fi
           npx --yes staticrypt dist/atlas/index.html \
             --password "$ATLAS_PASSPHRASE" \
+            --short \
             --remember 365 \
             --template-title "sapho atlas" \
             --template-instructions "Passphrase is in the corpus repo's Actions secret (ask whoever runs this sapho)." \
