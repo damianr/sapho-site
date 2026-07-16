@@ -1,0 +1,56 @@
+name: atlas
+
+on:
+  push:
+    branches: [main]
+    paths: ["products/**", "scripts/build_atlas.py", ".github/workflows/atlas.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history so per-file git dates are correct
+
+      - name: Build atlas
+        run: python3 scripts/build_atlas.py
+
+      - name: Encrypt for public hosting
+        env:
+          ATLAS_PASSPHRASE: ${{ secrets.ATLAS_PASSPHRASE }}
+        run: |
+          if [ -z "$ATLAS_PASSPHRASE" ]; then
+            echo "::error::ATLAS_PASSPHRASE secret not set — refusing to publish an unencrypted atlas."
+            echo "Set it once with: gh secret set ATLAS_PASSPHRASE --repo <owner>/sapho"
+            exit 1
+          fi
+          npx --yes staticrypt dist/atlas/index.html \
+            --password "$ATLAS_PASSPHRASE" \
+            --remember 365 \
+            --template-title "sapho atlas" \
+            --template-instructions "Passphrase is in the corpus repo's Actions secret (ask whoever runs this sapho)." \
+            -d dist/pages
+          mv dist/pages/dist/atlas/index.html dist/pages/index.html 2>/dev/null || true
+          find dist/pages -type d -empty -delete
+          ls -la dist/pages
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/pages
+      - id: deployment
+        uses: actions/deploy-pages@v4
