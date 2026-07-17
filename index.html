@@ -143,6 +143,11 @@
     .ripple { opacity: 0.12; }
   }
 
+  .fan { max-width: 36rem; margin-top: 1.5rem; }
+  .fan .fan-fm { stroke: var(--accent-purple); stroke-width: 3; stroke-linecap: round; }
+  .fan .fan-tx { stroke: var(--text-tertiary); stroke-width: 3; stroke-linecap: round; opacity: 0.5; }
+  .fan .dot-out { fill: var(--accent-purple); }
+
   /* ---------- sections ---------- */
   section { border-top: 1px solid var(--border-subtle); padding: 3.25rem 0; }
   section .key { display: block; margin-bottom: 1.25rem; }
@@ -412,92 +417,78 @@
   <section>
     <div class="prose">
       <h2>Your AI already builds your products. It just doesn't know them.</h2>
-      <p>Every session starts from zero. You ask for a landing page, a pitch, an App Store
-        description, and first you coach: who it's for, what got cut and why, how you talk
-        about it. The knowledge exists; it's just scattered across old chats, tracker tickets,
-        and your head. sapho gives it one home your AI actually reads.</p>
+      <p>So every session starts with you re-explaining: who it's for, what got cut, how you
+        talk about it. sapho ends the re-explaining.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="prose">
+      <h2>One file per product. Every AI reads it before it writes.</h2>
     </div>
     <div class="moves">
       <div class="move">
         <span class="n">01 · never re-explain</span>
-        <h3>Every output starts grounded</h3>
-        <p>Your agent interviews you once and writes the truth file: the problem, the approach,
-          the decisions with their reasons, the positioning. From then on, every landing page,
-          pitch, spec, or App Store description starts from those facts instead of from zero.
-          The coaching tax is gone.</p>
+        <h3>Outputs start grounded</h3>
+        <p>The truth file holds the problem, the decisions, the positioning. Your AI reads it
+          first, every time.</p>
       </div>
       <div class="move">
         <span class="n">02 · consistent everywhere</span>
-        <h3>Every AI tells the same story</h3>
-        <p>The file lives in a plain git repo you own; push it to a private GitHub repo and
-          Claude Code, ChatGPT, and whatever you adopt next all read the same copy. Your
-          positioning stays consistent across every surface and every session, and no AI
-          invents product facts again.</p>
+        <h3>Same story on every surface</h3>
+        <p>Claude Code, ChatGPT, whatever comes next: one GitHub repo, one set of facts.</p>
       </div>
       <div class="move">
-        <span class="n">03 · decisions survive</span>
-        <h3>Your reasoning compounds</h3>
-        <p>When you make a real call mid-session, your agent folds it into the file with the
-          why, commits, and pushes; chat surfaces propose the edit as a pull request you merge.
-          Six months later the reasons are still there, contradictions get flagged instead of
-          slipping through, and git gives you history and undo for free.</p>
+        <span class="n">03 · nothing gets lost</span>
+        <h3>Decisions keep their why</h3>
+        <p>New calls fold back into the file, in git, with history and undo for free.</p>
       </div>
     </div>
   </section>
 
   <section>
     <div class="prose">
-      <h2>One source. Many renderings.</h2>
-      <p>An example. SafeYum is a (real) food-journal app for families managing kids' food
-        sensitivities. Its entire truth file is about 70 lines; the first tab shows a slice of
-        it. The other tabs are outputs generated from that file alone, with no extra
-        instructions: same facts, different shape and voice.</p>
+      <h2>Write the truth once. Render it as anything.</h2>
+      <p>The file holds the facts; the AI shapes them into whatever you need next.</p>
     </div>
-    <div class="tabs" role="tablist" aria-label="Renderings of one truth file">
-      <button class="tab" role="tab" id="tab-source" aria-selected="true" aria-controls="panel-source" type="button">the truth file</button>
-      <button class="tab" role="tab" id="tab-marketing" aria-selected="false" aria-controls="panel-marketing" type="button">→ marketing page</button>
-      <button class="tab" role="tab" id="tab-pitch" aria-selected="false" aria-controls="panel-pitch" type="button">→ pitch</button>
+    <div class="diagram fan">
+      <svg viewBox="0 0 500 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="One truth file rendered into many outputs">
+        <path id="f1" class="wire" d="M150 118 C 230 118, 250 34, 344 34"/>
+        <path id="f2" class="wire" d="M150 122 C 230 122, 250 78, 344 78"/>
+        <path id="f3" class="wire" d="M150 126 C 230 126, 250 122, 344 122"/>
+        <path id="f4" class="wire" d="M150 130 C 230 130, 250 166, 344 166"/>
+        <path id="f5" class="wire" d="M150 134 C 230 134, 250 210, 344 210"/>
+        <rect class="hub-circle" x="40" y="86" width="110" height="76" rx="10"/>
+        <line class="fan-fm" x1="56" y1="108" x2="104" y2="108"/>
+        <line class="fan-tx" x1="56" y1="124" x2="126" y2="124"/>
+        <line class="fan-tx" x1="56" y1="138" x2="116" y2="138"/>
+        <text class="pill-label" x="95" y="182" text-anchor="middle">the truth file</text>
+        <rect class="pill" x="344" y="20" width="136" height="28" rx="14"/>
+        <text class="pill-label" x="412" y="38" text-anchor="middle">marketing page</text>
+        <rect class="pill" x="344" y="64" width="136" height="28" rx="14"/>
+        <text class="pill-label" x="412" y="82" text-anchor="middle">pitch deck</text>
+        <rect class="pill" x="344" y="108" width="136" height="28" rx="14"/>
+        <text class="pill-label" x="412" y="126" text-anchor="middle">product spec</text>
+        <rect class="pill" x="344" y="152" width="136" height="28" rx="14"/>
+        <text class="pill-label" x="412" y="170" text-anchor="middle">README</text>
+        <rect class="pill" x="344" y="196" width="136" height="28" rx="14"/>
+        <text class="pill-label" x="412" y="214" text-anchor="middle">App Store copy</text>
+        <circle class="dot dot-out" r="3"><animateMotion dur="3.2s" repeatCount="indefinite"><mpath href="#f1"/></animateMotion></circle>
+        <circle class="dot dot-out" r="3"><animateMotion dur="3.6s" begin="0.6s" repeatCount="indefinite"><mpath href="#f2"/></animateMotion></circle>
+        <circle class="dot dot-out" r="3"><animateMotion dur="3s" begin="1.1s" repeatCount="indefinite"><mpath href="#f3"/></animateMotion></circle>
+        <circle class="dot dot-out" r="3"><animateMotion dur="3.4s" begin="1.7s" repeatCount="indefinite"><mpath href="#f4"/></animateMotion></circle>
+        <circle class="dot dot-out" r="3"><animateMotion dur="3.8s" begin="2.3s" repeatCount="indefinite"><mpath href="#f5"/></animateMotion></circle>
+      </svg>
     </div>
-
-    <div class="panel" id="panel-source" role="tabpanel" aria-labelledby="tab-source">
-      <pre class="mono-block"><span class="fm">one_liner:</span> AI-first food journal. Natural language in,
-  structured safe/trigger tracking out.
-<span class="fm">insight:</span>  input friction kills food journals; a kept journal
-  is the only one that can find patterns
-<span class="fm">decision:</span> insights refuse to run below 5 entries / 2 dates;
-  one bad early correlation destroys parent trust
-<span class="fm">wedge:</span>    FPIES families. Highest pain, most underserved,
-  founder is one of them.</pre>
-    </div>
-    <div class="panel" id="panel-marketing" role="tabpanel" aria-labelledby="tab-marketing" hidden>
-      <h4>Just say what happened. SafeYum keeps the record.</h4>
-      <p>"Mia had oatmeal with banana, seemed fussy after her nap." That's the whole entry. SafeYum
-        turns it into a structured journal: the meal, the ingredients, who it was, while you get
-        back to your kid. Built by a parent who lived the alternative: a paper diary and a
-        guess.</p>
-    </div>
-    <div class="panel" id="panel-pitch" role="tabpanel" aria-labelledby="tab-pitch" hidden>
-      <h4>The wedge is the worst night of a parent's year.</h4>
-      <p>Families managing severe food sensitivities run food trials with a paper diary, because
-        every journaling app demands structured input at exactly the moment structure is
-        impossible. SafeYum owns that moment with conversational capture the incumbents can't
-        retrofit, then expands to the general food-journaling market from a position of earned
-        trust.</p>
-    </div>
-    <p class="demo-caption">Both outputs generated from the same file, no coaching in between.</p>
   </section>
 
   <section>
-    <span class="key"><b>install:</b></span>
     <div class="prose">
       <h2>Installation is a sentence.</h2>
-      <p>Your AI does the installing; you approve its plan. Agentic tools like Claude Code set up
-        everything on your machine. Chat apps like ChatGPT connect through GitHub and walk you
-        through it. Fifteen minutes later you own a truth file, and the installer was also the
-        tutorial.</p>
+      <p>Copy one prompt, give it to your AI, approve its plan. Fifteen minutes, no account.</p>
       <div class="cta-row" style="margin-top: 1.5rem;">
         <button class="cta" type="button" data-open-install>get started</button>
-        <span class="cta-sub">Works with Claude Code, ChatGPT, and any AI that can read a page.</span>
+        <span class="cta-sub">Claude Code, ChatGPT, or any AI that can read a page.</span>
       </div>
     </div>
 
@@ -570,7 +561,6 @@ tags:       [&lt;...&gt;]
   </section>
 
   <section>
-    <span class="key"><b>faq:</b></span>
     <div class="prose">
       <div class="faq-item">
         <h3>Where does my data live?</h3>
