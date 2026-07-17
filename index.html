@@ -419,27 +419,28 @@
     </div>
     <div class="moves">
       <div class="move">
-        <span class="n">01 · one file per product</span>
-        <h3>Truth lives in a git repo you own</h3>
-        <p>Your agent interviews you once and writes the truth file: frontmatter for the facts,
-          four prose sections for the problem, the approach, the decisions with their reasons,
-          and the positioning. It's plain markdown in a plain git repo. Push it to a private
-          GitHub repo and every AI surface reads and writes the same copy.</p>
+        <span class="n">01 · never re-explain</span>
+        <h3>Every output starts grounded</h3>
+        <p>Your agent interviews you once and writes the truth file: the problem, the approach,
+          the decisions with their reasons, the positioning. From then on, every landing page,
+          pitch, spec, or App Store description starts from those facts instead of from zero.
+          The coaching tax is gone.</p>
       </div>
       <div class="move">
-        <span class="n">02 · every output starts read</span>
-        <h3>Your AI reads before it writes</h3>
-        <p>A convention in your AI's instruction file makes every session read the truth file in
-          full before generating anything product-facing. Claude Code reads it straight from
-          disk; ChatGPT reads the same file through its GitHub connector. Facts come from the
-          file; voice and format are per-output.</p>
+        <span class="n">02 · consistent everywhere</span>
+        <h3>Every AI tells the same story</h3>
+        <p>The file lives in a plain git repo you own; push it to a private GitHub repo and
+          Claude Code, ChatGPT, and whatever you adopt next all read the same copy. Your
+          positioning stays consistent across every surface and every session, and no AI
+          invents product facts again.</p>
       </div>
       <div class="move">
-        <span class="n">03 · truth folds back in</span>
-        <h3>Decisions get captured where they happen</h3>
-        <p>When a real decision lands mid-session, your agent folds it into the file, commits,
-          and pushes. Chat surfaces propose the edit as a pull request you merge. Git is the
-          history, the sync, and the undo. No server, no database, no account.</p>
+        <span class="n">03 · decisions survive</span>
+        <h3>Your reasoning compounds</h3>
+        <p>When you make a real call mid-session, your agent folds it into the file with the
+          why, commits, and pushes; chat surfaces propose the edit as a pull request you merge.
+          Six months later the reasons are still there, contradictions get flagged instead of
+          slipping through, and git gives you history and undo for free.</p>
       </div>
     </div>
   </section>
@@ -447,14 +448,15 @@
   <section>
     <div class="prose">
       <h2>One source. Many renderings.</h2>
-      <p>The file is the substrate; the AI is the transformer. Same facts, any shape, no coaching
-        in between.</p>
+      <p>An example. SafeYum is a (real) food-journal app for families managing kids' food
+        sensitivities. Its entire truth file is about 70 lines; the first tab shows a slice of
+        it. The other tabs are outputs generated from that file alone, with no extra
+        instructions: same facts, different shape and voice.</p>
     </div>
     <div class="tabs" role="tablist" aria-label="Renderings of one truth file">
-      <button class="tab" role="tab" id="tab-source" aria-selected="true" aria-controls="panel-source" type="button">source file</button>
-      <button class="tab" role="tab" id="tab-marketing" aria-selected="false" aria-controls="panel-marketing" type="button">marketing page</button>
-      <button class="tab" role="tab" id="tab-portfolio" aria-selected="false" aria-controls="panel-portfolio" type="button">portfolio entry</button>
-      <button class="tab" role="tab" id="tab-pitch" aria-selected="false" aria-controls="panel-pitch" type="button">pitch</button>
+      <button class="tab" role="tab" id="tab-source" aria-selected="true" aria-controls="panel-source" type="button">the truth file</button>
+      <button class="tab" role="tab" id="tab-marketing" aria-selected="false" aria-controls="panel-marketing" type="button">→ marketing page</button>
+      <button class="tab" role="tab" id="tab-pitch" aria-selected="false" aria-controls="panel-pitch" type="button">→ pitch</button>
     </div>
 
     <div class="panel" id="panel-source" role="tabpanel" aria-labelledby="tab-source">
@@ -471,24 +473,18 @@
       <h4>Just say what happened. SafeYum keeps the record.</h4>
       <p>"Mia had oatmeal with banana, seemed fussy after her nap." That's the whole entry. SafeYum
         turns it into a structured journal: the meal, the ingredients, who it was, while you get
-        back to your kid. Built by an FPIES parent who lived the alternative: a paper diary and a
+        back to your kid. Built by a parent who lived the alternative: a paper diary and a
         guess.</p>
-    </div>
-    <div class="panel" id="panel-portfolio" role="tabpanel" aria-labelledby="tab-portfolio" hidden>
-      <h4>SafeYum: reframing the problem as capture, not analysis</h4>
-      <p>Everyone in this space competes on better charts. I went after the reason the charts stay
-        empty: nobody fills out forms mid-crisis. Conversational input, parse-confirm-save, and an
-        insights engine that deliberately refuses to speak until the data can support it, because
-        one bad early correlation costs the only asset that matters: trust.</p>
     </div>
     <div class="panel" id="panel-pitch" role="tabpanel" aria-labelledby="tab-pitch" hidden>
       <h4>The wedge is the worst night of a parent's year.</h4>
-      <p>FPIES families run food trials with a paper diary because every journaling app demands
-        structured input at exactly the moment structure is impossible. SafeYum owns that moment
-        with conversational capture the incumbents can't retrofit, then expands to the general
-        food-journaling market from a position of earned trust.</p>
+      <p>Families managing severe food sensitivities run food trials with a paper diary, because
+        every journaling app demands structured input at exactly the moment structure is
+        impossible. SafeYum owns that moment with conversational capture the incumbents can't
+        retrofit, then expands to the general food-journaling market from a position of earned
+        trust.</p>
     </div>
-    <p class="demo-caption">All four generated from the same file. The tabs are the coaching you no longer do.</p>
+    <p class="demo-caption">Both outputs generated from the same file, no coaching in between.</p>
   </section>
 
   <section>
@@ -602,11 +598,6 @@ tags:       [&lt;...&gt;]
     </div>
   </section>
 
-  <footer class="site">
-    <span class="wordmark">sapho<span class="stop">.</span></span>
-    <span class="colophon">Named for the juice that sharpens a mentat's mind. One canonical truth,
-      many renderings. The AI is the transformer; the file is the source.</span>
-  </footer>
 </div>
 
 <div class="modal-overlay" id="install-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
