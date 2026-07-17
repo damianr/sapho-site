@@ -5,7 +5,7 @@ projects. One canonical markdown file per product; every AI the user works with 
 before generating anything about that product. There is no server and no account — the
 system is a schema, a few conventions, and a git repo the user owns.
 
-spec_version: 5
+spec_version: 6
 
 ## Step 0 — Detect your capabilities
 
@@ -112,15 +112,6 @@ Two rules keep the corpus from rotting:
    insight behind it; how it works and what makes the approach different; the decisions
    they'd otherwise re-explain, with the why; how they talk about it and what it's against.
    Write `products/<slug>.md`, show it to them, commit.
-5. **Live atlas (offer it; needs the GitHub remote).** A dashboard over the corpus, rebuilt
-   by GitHub Actions on every push and published **encrypted** to GitHub Pages — the public
-   URL serves AES ciphertext; the passphrase decrypts in the browser, so private truth never
-   appears in plaintext on the web. Install `scripts/build_atlas.py` from
-   https://sapho.xyz/kit/build_atlas.py and `.github/workflows/atlas.yml` from
-   https://sapho.xyz/kit/atlas.yml. Then have the user choose a passphrase and set it
-   themselves: `gh secret set ATLAS_PASSPHRASE --repo <owner>/<corpus>` — never generate,
-   display, or commit the passphrase yourself. Enable Pages with
-   `gh api repos/<owner>/<corpus>/pages -X POST -f build_type=workflow`.
 
 ## CHAT-SURFACE SETUP (GitHub-connected chat apps)
 
