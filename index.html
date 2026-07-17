@@ -418,13 +418,7 @@
     <div class="prose">
       <h2>Your AI already builds your products. It just doesn't know them.</h2>
       <p>So every session starts with you re-explaining: who it's for, what got cut, how you
-        talk about it. sapho ends the re-explaining.</p>
-    </div>
-  </section>
-
-  <section>
-    <div class="prose">
-      <h2>One file per product. Every AI reads it before it writes.</h2>
+        talk about it. sapho gives all of it one home your AI actually reads.</p>
     </div>
     <div class="moves">
       <div class="move">
@@ -444,15 +438,8 @@
         <p>New calls fold back into the file, in git, with history and undo for free.</p>
       </div>
     </div>
-  </section>
-
-  <section>
-    <div class="prose">
-      <h2>Context for everything, not just copy.</h2>
-      <p>Whatever the task, your AI starts from the truth instead of a guess.</p>
-    </div>
     <div class="diagram fan">
-      <svg viewBox="0 0 500 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="One truth file rendered into many outputs">
+      <svg viewBox="0 0 500 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="One truth file grounding many kinds of work">
         <path id="f1" class="wire" d="M150 118 C 230 118, 250 34, 344 34"/>
         <path id="f2" class="wire" d="M150 122 C 230 122, 250 78, 344 78"/>
         <path id="f3" class="wire" d="M150 126 C 230 126, 250 122, 344 122"/>
@@ -479,13 +466,28 @@
         <circle class="dot dot-out" r="3"><animateMotion dur="3.4s" begin="1.7s" repeatCount="indefinite"><mpath href="#f4"/></animateMotion></circle>
         <circle class="dot dot-out" r="3"><animateMotion dur="3.8s" begin="2.3s" repeatCount="indefinite"><mpath href="#f5"/></animateMotion></circle>
       </svg>
+      <div class="diagram-caption">context for everything, not just copy</div>
     </div>
   </section>
 
   <section>
     <div class="prose">
-      <h2>Installation is a sentence.</h2>
-      <p>Copy one prompt, give it to your AI, approve its plan. Fifteen minutes, no account.</p>
+      <h2>One file per product. Every AI reads it before it writes.</h2>
+      <p>Each product is a markdown file: YAML frontmatter for the facts (name, audience,
+        status, links to your tracker and repos) and four prose sections for the problem and
+        insight, how it works, the key decisions with their reasons, and the positioning.
+        The corpus is a plain git repo you own; push it to a private GitHub repo and the same
+        copy is reachable from every surface you work in.</p>
+      <p>A short convention in your AI's instruction file (CLAUDE.md, AGENTS.md, or custom
+        instructions) tells it to read the relevant truth file in full before any
+        product-facing work, to never invent product facts, and to flag durable decisions so
+        they fold back into the file. Agentic tools like Claude Code read from disk and commit
+        directly; chat apps like ChatGPT read through their GitHub connector and propose
+        changes as pull requests you merge. Git supplies the history, the sync, and the undo.</p>
+      <p>Installation is a sentence: copy one prompt, give it to your AI, and it handles the
+        rest. It checks for an existing corpus before creating anything, sets up the repo and
+        conventions, then interviews you about your first product. You approve the plan before
+        it touches a file. Fifteen minutes, no server, no account.</p>
       <div class="cta-row" style="margin-top: 1.5rem;">
         <button class="cta" type="button" data-open-install>get started</button>
         <span class="cta-sub">Claude Code, ChatGPT, or any AI that can read a page.</span>
