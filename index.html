@@ -281,12 +281,10 @@
 
   <div class="hero" id="top">
     <div>
-      <span class="key reveal"><b>one_liner:</b> tell your ai once</span>
-      <h1 class="reveal d1">A <em>single</em> source of truth for your products<span class="stop">.</span></h1>
-      <p class="lede reveal d2">One canonical truth file per product: the problem, the approach, the
-        decisions and their reasons, the positioning. Every AI you work with reads it before writing
-        a word. <span class="quiet">One source, many renderings, zero re-coaching.</span></p>
-      <div class="cta-row reveal d3">
+      <h1 class="reveal">A <em>single</em> source of truth for your products<span class="stop">.</span></h1>
+      <p class="lede reveal d1">The problem, the approach, the decisions and their reasons, the
+        positioning. Every AI you work with reads it before writing a word.</p>
+      <div class="cta-row reveal d2">
         <button class="cta" type="button" data-open-install>get started</button>
         <span class="cta-sub">No server. No account. Your files, your machine.</span>
       </div>
@@ -412,47 +410,41 @@
   </div>
 
   <section>
-    <span class="key"><b>problem:</b></span>
     <div class="prose">
       <h2>Your AI already builds your products. It just doesn't know them.</h2>
       <p>Every session starts from zero. You ask for a landing page, a pitch, an App Store
-        description, and first you coach. No, it's <em>for</em> parents, not doctors. No, we killed
-        that feature, and for a good reason. No, that's not how we talk about it. The knowledge
-        exists; it's just scattered across old chats, tracker tickets, and your head. So you pay
-        the explaining tax on every output, forever.</p>
-      <p class="muted">Trackers hold what you're doing. Nothing holds what's <em>true</em>.</p>
-    </div>
-  </section>
-
-  <section>
-    <span class="key"><b>how_it_works:</b></span>
-    <div class="prose">
-      <h2>A file, a habit, and the AI you already have.</h2>
+        description, and first you coach: who it's for, what got cut and why, how you talk
+        about it. The knowledge exists; it's just scattered across old chats, tracker tickets,
+        and your head. sapho gives it one home your AI actually reads.</p>
     </div>
     <div class="moves">
       <div class="move">
-        <span class="n">01 · interview</span>
-        <h3>One file per product</h3>
-        <p>Your agent interviews you once and writes the truth file: machine-readable frontmatter,
-          four sections of prose. Ten minutes. It lives in a plain git repo you own.</p>
+        <span class="n">01 · one file per product</span>
+        <h3>Truth lives in a git repo you own</h3>
+        <p>Your agent interviews you once and writes the truth file: frontmatter for the facts,
+          four prose sections for the problem, the approach, the decisions with their reasons,
+          and the positioning. It's plain markdown in a plain git repo. Push it to a private
+          GitHub repo and every AI surface reads and writes the same copy.</p>
       </div>
       <div class="move">
-        <span class="n">02 · ground</span>
-        <h3>Every output starts read</h3>
-        <p>A user-level convention makes any AI session read the file in full before generating
-          anything product-facing. Facts come from the file; voice and format are per-output.</p>
+        <span class="n">02 · every output starts read</span>
+        <h3>Your AI reads before it writes</h3>
+        <p>A convention in your AI's instruction file makes every session read the truth file in
+          full before generating anything product-facing. Claude Code reads it straight from
+          disk; ChatGPT reads the same file through its GitHub connector. Facts come from the
+          file; voice and format are per-output.</p>
       </div>
       <div class="move">
-        <span class="n">03 · reconcile</span>
-        <h3>Truth folds back in</h3>
-        <p>When a real decision happens mid-session, your agent flags it, folds it into the file,
-          and rejects status noise. Contradictions get surfaced, never silently overwritten.</p>
+        <span class="n">03 · truth folds back in</span>
+        <h3>Decisions get captured where they happen</h3>
+        <p>When a real decision lands mid-session, your agent folds it into the file, commits,
+          and pushes. Chat surfaces propose the edit as a pull request you merge. Git is the
+          history, the sync, and the undo. No server, no database, no account.</p>
       </div>
     </div>
   </section>
 
   <section>
-    <span class="key"><b>renderings:</b></span>
     <div class="prose">
       <h2>One source. Many renderings.</h2>
       <p>The file is the substrate; the AI is the transformer. Same facts, any shape, no coaching
@@ -521,7 +513,7 @@
           capabilities: full install if you can write files on the user's machine, GitHub-connected
           setup if you can only reach repos, guided walkthrough if you have no tools. Second,
           <b>discover before you create</b>: sapho may already be installed by another tool or in a
-          non-default location — always ask the user ("have you used sapho before?"), check the
+          non-default location: always ask the user ("have you used sapho before?"), check the
           user-level instruction files for a sapho section, and probe ~/sapho and ~/Projects/sapho.
           If a corpus exists you are CONNECTING, not installing: read the corpus's own CONNECT.md
           (it outranks this page), pull latest, report freshness, point your platform's conventions
