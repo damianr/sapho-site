@@ -315,26 +315,18 @@
   <section>
     <div class="prose">
       <h2>Your AI already builds your products. It just doesn't know them.</h2>
-      <p>So every session starts with you re-explaining: who it's for, what got cut, how you
-        talk about it. sapho gives all of it one home your AI actually reads.</p>
-    </div>
-    <p class="pull">Tell it once. It stays told.</p>
     <div class="moves">
       <div class="move">
-        <span class="n">01 · never re-explain</span>
         <h3>Outputs start grounded</h3>
-        <p>The truth file holds the problem, the decisions, the positioning. Your AI reads it
-          first, every time.</p>
+        <p>Your AI reads the truth file first, every time.</p>
       </div>
       <div class="move">
-        <span class="n">02 · consistent everywhere</span>
         <h3>Same story on every surface</h3>
-        <p>Claude Code, ChatGPT, whatever comes next: one GitHub repo, one set of facts.</p>
+        <p>One repo. Claude Code, ChatGPT, whatever's next.</p>
       </div>
       <div class="move">
-        <span class="n">03 · nothing gets lost</span>
         <h3>Decisions keep their why</h3>
-        <p>New calls fold back into the file, in git, with history and undo for free.</p>
+        <p>Every call folds back in, with its why, in git.</p>
       </div>
     </div>
   </section>
@@ -342,21 +334,9 @@
   <section>
     <div class="prose">
       <h2>One file per product. Every AI reads it before it writes.</h2>
-      <p>Each product is a markdown file: YAML frontmatter for the facts (name, audience,
-        status, links to your tracker and repos) and four prose sections for the problem and
-        insight, how it works, the key decisions with their reasons, and the positioning.
-        The corpus is a plain git repo you own; push it to a private GitHub repo and the same
-        copy is reachable from every surface you work in.</p>
-      <p>A short convention in your AI's instruction file (CLAUDE.md, AGENTS.md, or custom
-        instructions) tells it to read the relevant truth file in full before any
-        product-facing work, to never invent product facts, and to flag durable decisions so
-        they fold back into the file. Agentic tools like Claude Code read from disk and commit
-        directly; chat apps like ChatGPT read through their GitHub connector and propose
-        changes as pull requests you merge. Git supplies the history, the sync, and the undo.</p>
-      <p>Installation is a sentence: copy one prompt, give it to your AI, and it handles the
-        rest. It checks for an existing corpus before creating anything, sets up the repo and
-        conventions, then interviews you about your first product. You approve the plan before
-        it touches a file. Fifteen minutes, no server, no account.</p>
+      <p>A markdown file per product, in a git repo you own. A one-line convention makes
+        every AI read it before product work and fold new decisions back in. Installing is
+        one prompt; your AI does the rest.</p>
       <div class="cta-row" style="margin-top: 1.5rem;">
         <button class="cta" type="button" data-open-install>get started</button>
         <span class="cta-sub">Claude Code, ChatGPT, or any AI that can read a page.</span>
@@ -435,26 +415,19 @@ tags:       [&lt;...&gt;]
     <div class="prose">
       <div class="faq-item">
         <h3>Where does my data live?</h3>
-        <p>On your machine, in a git repo you own. Add a private GitHub remote and chat surfaces
-          like ChatGPT can read and write the same corpus through their connectors. Nothing is
-          hosted by sapho; there is no sapho server.</p>
+        <p>In a git repo you own. There is no sapho server.</p>
       </div>
       <div class="faq-item">
         <h3>Which AI clients does it work with?</h3>
-        <p>Claude Code and other agentic tools are first-class: the conventions install directly.
-          ChatGPT and claude.ai connect through GitHub. Anything else works the moment it can read
-          a file or a paste; each truth file is about 70 lines and self-contained by design.</p>
+        <p>Claude Code and agentic tools natively; ChatGPT and claude.ai through GitHub.</p>
       </div>
       <div class="faq-item">
         <h3>What happens if I stop using it?</h3>
-        <p>You keep a folder of well-written markdown about your products. There's no export
-          because there's no lock-in; the files were always the product.</p>
+        <p>You keep a folder of plain markdown. No lock-in.</p>
       </div>
       <div class="faq-item">
         <h3>What about teams?</h3>
-        <p>The corpus is git-native, so multi-player is a remote away: pull requests become the
-          gate on truth, code owners own product files, and agents propose instead of write. Add
-          process when you need it; the files never change.</p>
+        <p>It is git: pull requests become the gate on truth.</p>
       </div>
     </div>
   </section>
