@@ -166,30 +166,12 @@
   .move .mem { font-size: 0.82rem; color: var(--accent-purple); margin: 0 0 0.6rem; line-height: 1.6; }
   .move .pay { font-size: 0.78rem; color: var(--text-secondary); margin: 0; line-height: 1.65; }
 
-  /* ---------- system map ---------- */
-  .map { max-width: 40rem; margin: 2rem 0 2.25rem; }
-  .map .layer {
-    display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap;
-    border: 1px solid var(--border-default); background: var(--bg-card);
-    border-radius: 12px; padding: 0.85rem 1.2rem;
-  }
-  .map .layer-k { font-size: 0.72rem; letter-spacing: 0.06em; color: var(--text-tertiary); min-width: 5.5rem; }
-  .map .chips { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-  .map .chips span {
-    border: 1px solid var(--border-default); background: var(--bg-elevated);
-    border-radius: 999px; padding: 0.22rem 0.75rem; font-size: 0.72rem; color: var(--text-primary);
-  }
-  .map .chips.file span { border-radius: 6px; color: var(--accent-purple); background: var(--purple-soft); border-color: rgba(168, 155, 232, 0.3); }
-  .map .map-mid {
-    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-    padding: 0.55rem 1.2rem; flex-wrap: wrap;
-  }
-  .map .mid-label { font-size: 0.72rem; letter-spacing: 0.06em; color: var(--text-secondary); }
-  .map .arr { font-size: 0.72rem; }
-  .map .arr.read { color: var(--accent-teal); }
-  .map .arr.write { color: var(--accent-coral); }
-  .map .layer.base { margin-top: 0.5rem; border-style: dashed; background: none; }
-  .map .base-t { font-size: 0.72rem; color: var(--text-tertiary); }
+  .move .mem { font-size: 0.82rem; color: var(--accent-purple); margin: 0 0 0.6rem; line-height: 1.6; }
+  .move .pay { font-size: 0.78rem; color: var(--text-secondary); margin: 0; line-height: 1.65; }
+  .parts { max-width: 34rem; margin: 1.75rem 0 2rem; }
+  .part { display: flex; gap: 1.25rem; padding: 0.65rem 0; border-bottom: 1px solid var(--border-subtle); font-size: 0.82rem; }
+  .part:first-child { border-top: 1px solid var(--border-subtle); }
+  .part-k { color: var(--accent-purple); min-width: 6.5rem; flex-shrink: 0; }
 
   /* ---------- sections ---------- */
   section { border-top: 1px solid var(--border-subtle); padding: 3.25rem 0; }
@@ -333,7 +315,7 @@
       <p class="lede reveal d1">Tell it once. It stays told.</p>
       <div class="cta-row reveal d2">
         <button class="cta" type="button" data-open-install>get started</button>
-        <span class="cta-sub">Plain files, on your machine, under your control.</span>
+        <span class="cta-sub">Free. Plain files, on your machine, under your control.</span>
       </div>
     </div>
 
@@ -351,12 +333,12 @@
         <p class="pay">Months later, the App Store copy still leads with them. Unprompted.</p>
       </div>
       <div class="move">
-        <p class="mem">"Killed the trial feature: ceremony without trust."</p>
-        <p class="pay">When the idea comes back, your AI cites the decision.</p>
+        <p class="mem">"Not a lifecycle app. No checkboxes, ever."</p>
+        <p class="pay">Every feature idea gets tested against it before it ships.</p>
       </div>
       <div class="move">
-        <p class="mem">"Not a lifecycle app. No checkboxes, ever."</p>
-        <p class="pay">Every new feature idea gets tested against it first.</p>
+        <p class="mem">"Tabloid sources can never flip a status."</p>
+        <p class="pay">Six months later, "why not?" has an answer on file.</p>
       </div>
     </div>
   </section>
@@ -365,30 +347,14 @@
     <div class="prose">
       <h2>One file per product. Every AI reads it before it writes.</h2>
     </div>
-    <div class="map">
-      <div class="layer">
-        <span class="layer-k">your AIs</span>
-        <span class="chips"><span>Claude Code</span><span>ChatGPT</span><span>Cursor</span></span>
-      </div>
-      <div class="map-mid">
-        <span class="arr read">&#8595; read the truth first</span>
-        <span class="mid-label">the skills</span>
-        <span class="arr write">&#8593; write decisions back</span>
-      </div>
-      <div class="layer">
-        <span class="layer-k">the truth</span>
-        <span class="chips file"><span>safeyum.md</span><span>soliloquy.md</span><span>realitycheck.md</span></span>
-      </div>
-      <div class="layer base">
-        <span class="layer-k">git</span>
-        <span class="base-t">history &middot; sync &middot; one copy on GitHub, every surface reads it</span>
-      </div>
+    <div class="parts">
+      <div class="part"><span class="part-k">the files</span><span>one truth file per product, plain markdown</span></div>
+      <div class="part"><span class="part-k">the skills</span><span>every AI reads first, writes decisions back</span></div>
+      <div class="part"><span class="part-k">git</span><span>history, sync, one copy every surface reads</span></div>
     </div>
 
     <div class="prose">
-      <p>A markdown file per product, in a git repo you own. A one-line convention makes
-        every AI read it before product work and fold new decisions back in. Installing is
-        one prompt; your AI does the rest.</p>
+      <p>Installing is one prompt; your AI does the rest.</p>
       <div class="cta-row" style="margin-top: 1.5rem;">
         <button class="cta" type="button" data-open-install>get started</button>
         <span class="cta-sub">Claude Code, ChatGPT, or any AI that can read a page.</span>
@@ -465,6 +431,10 @@ tags:       [&lt;...&gt;]
 
   <section>
     <div class="prose">
+      <div class="faq-item">
+        <h3>What does it cost?</h3>
+        <p>Nothing. It's files and conventions, not a service.</p>
+      </div>
       <div class="faq-item">
         <h3>Where does my data live?</h3>
         <p>In a git repo you own. There is no sapho server.</p>
