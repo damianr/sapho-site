@@ -158,36 +158,10 @@
   .diagram .dot-req { fill: var(--text-tertiary); }
   .diagram .bstop2 { fill: var(--accent-purple); }
 
-  /* ---------- visual concepts ---------- */
-  .composer { max-width: 34rem; margin: 0.75rem auto 0; border: 1px solid var(--border-default); background: #0c0c11; border-radius: 14px; padding: 1.15rem 1.25rem; }
-  .comp-text { font-size: 0.95rem; color: var(--text-primary); min-height: 1.7em; }
-  .comp-row { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; gap: 1rem; flex-wrap: wrap; }
-  .attach {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    border: 1px solid rgba(168, 155, 232, 0.35); background: var(--purple-soft);
-    border-radius: 999px; padding: 0.32rem 0.8rem; font-size: 0.68rem; color: var(--text-primary);
-    animation: attachpulse 4s ease-in-out infinite;
+  .pull {
+    font-size: clamp(1.05rem, 2.2vw, 1.35rem); color: var(--accent-purple);
+    margin: 2rem 0 2.25rem; letter-spacing: -0.01em;
   }
-  .attach::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent-purple); flex-shrink: 0; }
-  .attach .dim { color: var(--text-tertiary); }
-  @keyframes attachpulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(168, 155, 232, 0); }
-    50% { box-shadow: 0 0 0 6px rgba(168, 155, 232, 0.07); border-color: rgba(168, 155, 232, 0.6); }
-  }
-  .send { width: 30px; height: 30px; border-radius: 50%; background: var(--accent-purple); color: #08080b; display: inline-flex; align-items: center; justify-content: center; font-size: 0.9rem; }
-  .t-p { color: var(--accent-purple); }
-  .cycle { transition: opacity 0.3s ease; }
-  .cycle.fading { opacity: 0; }
-  .equation { display: flex; align-items: center; justify-content: center; gap: 1.1rem; flex-wrap: wrap; margin: 1.6rem auto 0.5rem; }
-  .eq-box { border: 1px solid var(--border-default); background: var(--bg-card); border-radius: 10px; padding: 0.7rem 1.1rem; font-size: 0.9rem; color: var(--text-secondary); }
-  .eq-sapho { color: var(--text-primary); font-weight: 500; border-color: rgba(168, 155, 232, 0.4); }
-  .eq-op { color: var(--text-tertiary); font-size: 1.1rem; }
-  .eq-result { color: var(--accent-purple); font-size: 0.95rem; min-width: 16ch; }
-  .bigtype { text-align: center; margin: 1.7rem auto 0.6rem; }
-  .bt-1 { font-size: clamp(1.6rem, 3.6vw, 2.3rem); color: var(--text-primary); font-weight: 500; letter-spacing: -0.02em; }
-  .bt-2 { font-size: clamp(1.05rem, 2.4vw, 1.45rem); color: var(--text-secondary); margin-top: 0.5rem; }
-  .bt-c { color: var(--accent-purple); }
-  @media (prefers-reduced-motion: reduce) { .attach { animation: none; } }
 
   /* ---------- sections ---------- */
   section { border-top: 1px solid var(--border-subtle); padding: 3.25rem 0; }
@@ -344,43 +318,7 @@
       <p>So every session starts with you re-explaining: who it's for, what got cut, how you
         talk about it. sapho gives all of it one home your AI actually reads.</p>
     </div>
-    <div class="flow">
-      <div class="dia-variant" id="dia-v1">
-        <div class="composer">
-          <div class="comp-text"><span class="t-p">&gt;</span> <span class="cycle" data-cycle='["add a pricing page","write the App Store copy","is this feature on-brand?","plan next quarter"]'>add a pricing page</span></div>
-          <div class="comp-row">
-            <span class="attach">safeyum.md <span class="dim">· your product&#39;s truth · attached automatically</span></span>
-            <span class="send">&#8593;</span>
-          </div>
-        </div>
-        <div class="diagram-caption">sapho attaches the truth to every prompt, on every surface</div>
-      </div>
-
-      <div class="dia-variant" id="dia-v2" hidden>
-        <div class="equation">
-          <span class="eq-box"><span class="t-p">&gt;</span> your prompt</span>
-          <span class="eq-op">+</span>
-          <span class="eq-box eq-sapho">sapho<span class="stop">.</span></span>
-          <span class="eq-op">=</span>
-          <span class="eq-result cycle" data-cycle='["code that fits","on-brand copy","answers with receipts","plans that remember why"]'>code that fits</span>
-        </div>
-        <div class="diagram-caption">one file in the equation changes every result</div>
-      </div>
-
-      <div class="dia-variant" id="dia-v3" hidden>
-        <div class="bigtype">
-          <div class="bt-1">Ask anything.</div>
-          <div class="bt-2">It already knows <span class="cycle bt-c" data-cycle='["your audience.","what you cut.","why you decided.","how you talk."]'>your audience.</span></div>
-        </div>
-        <div class="diagram-caption">because it read the truth first</div>
-      </div>
-
-      <div class="dia-dots" role="tablist" aria-label="Visual versions">
-        <button class="dia-dot" type="button" role="tab" aria-selected="true" aria-label="Version 1: auto-attached truth" data-dia="dia-v1"></button>
-        <button class="dia-dot" type="button" role="tab" aria-selected="false" aria-label="Version 2: the equation" data-dia="dia-v2"></button>
-        <button class="dia-dot" type="button" role="tab" aria-selected="false" aria-label="Version 3: it already knows" data-dia="dia-v3"></button>
-      </div>
-    </div>
+    <p class="pull">Tell it once. It stays told.</p>
     <div class="moves">
       <div class="move">
         <span class="n">01 · never re-explain</span>
@@ -558,38 +496,9 @@ tags:       [&lt;...&gt;]
       });
     });
 
-    // Diagram variant switcher
-    var diaDots = document.querySelectorAll('.dia-dot');
-    Array.prototype.forEach.call(diaDots, function (d) {
-      d.addEventListener('click', function () {
-        Array.prototype.forEach.call(diaDots, function (x) {
-          x.setAttribute('aria-selected', x === d ? 'true' : 'false');
-        });
-        Array.prototype.forEach.call(document.querySelectorAll('.dia-variant'), function (v) { v.hidden = true; });
-        document.getElementById(d.getAttribute('data-dia')).hidden = false;
-      });
-    });
 
 
 
-    // Word cyclers
-    (function () {
-      var els = Array.prototype.slice.call(document.querySelectorAll('[data-cycle]'));
-      if (!els.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      var state = els.map(function (el) {
-        return { el: el, words: JSON.parse(el.getAttribute('data-cycle')), i: 0 };
-      });
-      setInterval(function () {
-        state.forEach(function (s) {
-          s.el.classList.add('fading');
-          setTimeout(function () {
-            s.i = (s.i + 1) % s.words.length;
-            s.el.textContent = s.words[s.i];
-            s.el.classList.remove('fading');
-          }, 320);
-        });
-      }, 3000);
-    })();
     // Install modal
     var overlay = document.getElementById('install-modal');
     var lastFocus = null;
