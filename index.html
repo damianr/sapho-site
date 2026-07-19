@@ -158,6 +158,35 @@
   .diagram .dot-req { fill: var(--text-tertiary); }
   .diagram .bstop2 { fill: var(--accent-purple); }
 
+  /* ---------- visual concepts ---------- */
+  .term { max-width: 40rem; margin: 0.5rem auto 0; border: 1px solid var(--border-default); border-radius: 12px; background: #0c0c11; overflow: hidden; }
+  .term-bar { display: flex; gap: 6px; padding: 10px 14px; border-bottom: 1px solid var(--border-subtle); }
+  .term-bar span { width: 10px; height: 10px; border-radius: 50%; background: var(--bg-elevated); }
+  .term pre { margin: 0; padding: 1.1rem 1.3rem 1.4rem; font-family: var(--font); font-size: 0.78rem; line-height: 1.85; white-space: pre-wrap; min-height: 15rem; }
+  .t-cmd { color: var(--text-primary); } .t-p { color: var(--accent-purple); }
+  .t-sys { color: var(--text-tertiary); } .t-out { color: var(--text-secondary); }
+  .t-ok { color: var(--accent-teal); } .t-warn { color: var(--accent-amber); }
+  .caret { display: inline-block; width: 7px; height: 13px; background: var(--accent-purple); vertical-align: -2px; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .vs { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; max-width: 46rem; margin: 0.5rem auto 0; }
+  @media (max-width: 700px) { .vs { grid-template-columns: 1fr; } }
+  .vs .col { border: 1px solid var(--border-subtle); background: var(--bg-card); border-radius: 12px; padding: 1.1rem 1.2rem; }
+  .vs .col h4 { font-size: 0.7rem; letter-spacing: 0.08em; font-weight: 400; margin: 0 0 0.9rem; color: var(--text-tertiary); }
+  .vs .col.good h4 { color: var(--accent-teal); }
+  .bub { border-radius: 10px; padding: 0.55rem 0.8rem; font-size: 0.72rem; line-height: 1.65; margin-bottom: 0.6rem; }
+  .bub.you { background: var(--purple-soft); color: var(--text-primary); }
+  .bub.ai { background: var(--bg-elevated); color: var(--text-secondary); }
+  .bub .dim { color: var(--text-tertiary); font-size: 0.65rem; display: block; margin-top: 0.35rem; }
+  .file { max-width: 34rem; margin: 0.5rem auto 0; border: 1px solid var(--border-subtle); background: #0c0c11; border-radius: 12px; padding: 1.2rem 1.4rem; font-size: 0.74rem; line-height: 2; position: relative; overflow: hidden; }
+  .file .fm-k { color: var(--accent-purple); }
+  .file .h { color: var(--text-primary); }
+  .file .dim { color: var(--text-tertiary); }
+  .file .diff { color: var(--accent-teal); opacity: 0; animation: diffin 10s ease infinite; }
+  @keyframes diffin { 0%, 52% { opacity: 0; } 62%, 92% { opacity: 1; } 100% { opacity: 0; } }
+  .scanline { position: absolute; left: 0; right: 0; height: 2em; background: var(--purple-soft); border-left: 2px solid var(--accent-purple); animation: scan 10s ease-in-out infinite; }
+  @keyframes scan { 0%, 14% { top: 20%; } 24%, 38% { top: 39%; } 48%, 62% { top: 55%; } 72%, 100% { top: 87%; } }
+  @media (prefers-reduced-motion: reduce) { .scanline, .caret { animation: none; } .file .diff { opacity: 1; animation: none; } }
+
   /* ---------- sections ---------- */
   section { border-top: 1px solid var(--border-subtle); padding: 3.25rem 0; }
   section .key { display: block; margin-bottom: 1.25rem; }
@@ -313,111 +342,55 @@
       <p>So every session starts with you re-explaining: who it's for, what got cut, how you
         talk about it. sapho gives all of it one home your AI actually reads.</p>
     </div>
-    <div class="diagram flow">
-      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A prompt goes to your AI surface, which reads sapho, produces the matching output, and new truth writes back">
-        <path id="fw1" class="wire" d="M180 143 H 248"/>
-        <path id="fw2a" class="wire" d="M380 103 C 405 110, 416 124, 429 133"/>
-        <path id="fw2" class="wire" d="M380 143 H 428"/>
-        <path id="fw2c" class="wire" d="M380 183 C 405 176, 416 162, 429 153"/>
-        <path id="fw3" class="wire" d="M512 143 H 578"/>
-        <path id="fw4" class="wire" d="M655 202 C 612 248, 520 230, 484 172"/>
+    <div class="flow">
+      <div class="dia-variant" id="dia-v1">
+        <div class="term">
+          <div class="term-bar"><span></span><span></span><span></span></div>
+          <pre id="term-body" aria-label="Example session: prompts answered from the truth file"></pre>
+        </div>
+        <div class="diagram-caption">a session with the truth attached</div>
+      </div>
 
-        <rect class="hub-circle" x="20" y="105" width="160" height="76" rx="10"/>
-        <text class="lbl" x="100" y="198" text-anchor="middle">your prompt</text>
-        <g>
-          <text class="mock" x="36" y="140"><tspan class="mock-p">&gt;</tspan> add a pricing</text>
-          <text class="mock" x="47" y="156">page</text>
-          <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="0s" repeatCount="indefinite"/>
-        </g>
-        <g opacity="0">
-          <text class="mock" x="36" y="140"><tspan class="mock-p">&gt;</tspan> write the app</text>
-          <text class="mock" x="47" y="156">store copy</text>
-          <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="-18s" repeatCount="indefinite"/>
-        </g>
-        <g opacity="0">
-          <text class="mock" x="36" y="140"><tspan class="mock-p">&gt;</tspan> is this feature</text>
-          <text class="mock" x="47" y="156">on-brand?</text>
-          <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="-12s" repeatCount="indefinite"/>
-        </g>
-        <g opacity="0">
-          <text class="mock" x="36" y="140"><tspan class="mock-p">&gt;</tspan> plan next</text>
-          <text class="mock" x="47" y="156">quarter</text>
-          <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="-6s" repeatCount="indefinite"/>
-        </g>
+      <div class="dia-variant" id="dia-v2" hidden>
+        <div class="vs">
+          <div class="col">
+            <h4>without sapho</h4>
+            <div class="bub you">write the App Store copy. context: SafeYum is a food journal, um, it's for parents, mainly FPIES families, we pivoted from the trial thing, also the tone should be…</div>
+            <div class="bub ai">Before I draft this: who exactly is the target audience, and how do you usually describe the product?</div>
+            <div class="bub you">…we've been over this six times</div>
+          </div>
+          <div class="col good">
+            <h4>with sapho.</h4>
+            <div class="bub you">write the App Store copy</div>
+            <div class="bub ai">Done. Grounded in your truth file: FPIES families first, "the journal that listens," conversational capture front and center. <span class="dim">read: products/safeyum.md</span></div>
+          </div>
+        </div>
+        <div class="diagram-caption">same task · the only difference is <span class="lg-r">the truth file</span></div>
+      </div>
 
-        <rect class="pill" x="250" y="88" width="130" height="30" rx="15"/>
-        <text class="pill-label" x="315" y="107" text-anchor="middle">Claude Code</text>
-        <rect class="pill" x="250" y="128" width="130" height="30" rx="15"/>
-        <text class="pill-label" x="315" y="147" text-anchor="middle">ChatGPT</text>
-        <rect class="pill" x="250" y="168" width="130" height="30" rx="15"/>
-        <text class="pill-label" x="315" y="187" text-anchor="middle">Cursor</text>
+      <div class="dia-variant" id="dia-v3" hidden>
+        <div class="file">
+          <div class="scanline"></div>
+          <div><span class="dim">---</span></div>
+          <div><span class="fm-k">name:</span> SafeYum</div>
+          <div><span class="fm-k">audience:</span> FPIES families first</div>
+          <div><span class="dim">---</span></div>
+          <div class="h">## Problem &amp; insight</div>
+          <div class="dim">input friction kills food journals; a kept journal finds patterns</div>
+          <div class="h">## Key decisions &amp; rationale</div>
+          <div class="dim">- the AI proposes, the parent confirms</div>
+          <div class="diff">+ trials return as dose ladders (reversed: standard of care won)</div>
+          <div class="h">## Positioning</div>
+          <div class="dim">"the journal that listens"</div>
+        </div>
+        <div class="diagram-caption"><span class="lg-r">read by every session</span> · <span class="lg-w">updated by reconcile</span> · one living file</div>
+      </div>
 
-        <g class="spin" style="transform-origin: 470px 143px;"><circle class="hub-ring" cx="470" cy="143" r="49"/></g>
-        <circle class="hub-circle" cx="470" cy="143" r="40"/>
-        <text class="brand" x="470" y="148" font-size="14" text-anchor="middle">sapho<tspan class="bstop">.</tspan></text>
-
-        <text class="lbl" x="196" y="133">1 · prompt</text>
-        <text class="lbl" x="386" y="127">2 · reads the truth</text>
-        <text class="lbl" x="518" y="133">3 · output</text>
-        <text class="lbl" x="500" y="252">4 · new truth writes back</text>
-
-        <rect class="hub-circle" x="580" y="88" width="160" height="112" rx="10"/>
-        <g>
-          <text class="mock mock-p" x="596" y="116">function Pricing()</text>
-          <text class="mock" x="596" y="134">  return tiers</text>
-          <text class="mock" x="596" y="152">    .map(render)</text>
-          <text class="mock" x="596" y="170">…</text>
-          <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="0s" repeatCount="indefinite"/>
-        </g>
-        <g opacity="0">
-          <line class="fan-fm" x1="596" y1="112" x2="656" y2="112"/>
-          <line class="fan-tx" x1="596" y1="130" x2="722" y2="130"/>
-          <line class="fan-tx" x1="596" y1="146" x2="710" y2="146"/>
-          <line class="fan-tx" x1="596" y1="162" x2="718" y2="162"/>
-          <line class="fan-tx" x1="596" y1="178" x2="668" y2="178"/>
-          <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="-18s" repeatCount="indefinite"/>
-        </g>
-        <g opacity="0">
-          <text class="mock mock-p" x="596" y="118">yes, if it stays</text>
-          <text class="mock" x="596" y="136">conversational;</text>
-          <text class="mock" x="596" y="154">see decision on</text>
-          <text class="mock" x="596" y="172">input friction</text>
-          <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="-12s" repeatCount="indefinite"/>
-        </g>
-        <g opacity="0">
-          <rect class="mock-box" x="596" y="106" width="9" height="9" rx="2"/>
-          <line class="fan-tx" x1="614" y1="111" x2="700" y2="111"/>
-          <rect class="mock-box" x="596" y="130" width="9" height="9" rx="2"/>
-          <line class="fan-tx" x1="614" y1="135" x2="716" y2="135"/>
-          <rect class="mock-box" x="596" y="154" width="9" height="9" rx="2"/>
-          <line class="fan-tx" x1="614" y1="159" x2="688" y2="159"/>
-          <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="-6s" repeatCount="indefinite"/>
-        </g>
-        <g>
-          <text class="lbl out-name" x="660" y="218" text-anchor="middle">the code<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="0s" repeatCount="indefinite"/></text>
-          <text class="lbl out-name" x="660" y="218" text-anchor="middle" opacity="0">the copy<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="-18s" repeatCount="indefinite"/></text>
-          <text class="lbl out-name" x="660" y="218" text-anchor="middle" opacity="0">the answer<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="-12s" repeatCount="indefinite"/></text>
-          <text class="lbl out-name" x="660" y="218" text-anchor="middle" opacity="0">the plan<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="-6s" repeatCount="indefinite"/></text>
-        </g>
-
-        <circle class="dot dot-out" r="3" opacity="0">
-          <animateMotion dur="6s" begin="0s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.083;0.217;1" calcMode="linear"><mpath href="#fw1"/></animateMotion>
-          <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.083;0.084;0.216;0.217;1" dur="6s" begin="0s" repeatCount="indefinite"/>
-        </circle>
-        <circle class="dot dot-req" r="3" opacity="0">
-          <animateMotion dur="6s" begin="0s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.25;0.35;1" calcMode="linear"><mpath href="#fw2"/></animateMotion>
-          <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.25;0.251;0.349;0.35;1" dur="6s" begin="0s" repeatCount="indefinite"/>
-        </circle>
-        <circle class="dot dot-read" r="3" opacity="0">
-          <animateMotion dur="6s" begin="0s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.383;0.517;1" calcMode="linear"><mpath href="#fw3"/></animateMotion>
-          <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.383;0.384;0.516;0.517;1" dur="6s" begin="0s" repeatCount="indefinite"/>
-        </circle>
-        <circle class="dot dot-write" r="3" opacity="0">
-          <animateMotion dur="6s" begin="0s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.6;0.767;1" calcMode="linear"><mpath href="#fw4"/></animateMotion>
-          <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.6;0.601;0.766;0.767;1" dur="6s" begin="0s" repeatCount="indefinite"/>
-        </circle>
-      </svg>
-      <div class="diagram-caption">prompt · <span class="lg-r">reads the truth</span> · output · <span class="lg-w">writes back</span></div>
+      <div class="dia-dots" role="tablist" aria-label="Visual versions">
+        <button class="dia-dot" type="button" role="tab" aria-selected="true" aria-label="Version 1: terminal session" data-dia="dia-v1"></button>
+        <button class="dia-dot" type="button" role="tab" aria-selected="false" aria-label="Version 2: with and without" data-dia="dia-v2"></button>
+        <button class="dia-dot" type="button" role="tab" aria-selected="false" aria-label="Version 3: the living file" data-dia="dia-v3"></button>
+      </div>
     </div>
     <div class="moves">
       <div class="move">
@@ -608,6 +581,56 @@ tags:       [&lt;...&gt;]
       });
     });
 
+
+    // Terminal session replay
+    (function () {
+      var body = document.getElementById('term-body');
+      if (!body) return;
+      var SCRIPT = [
+        ['cmd', 'write the App Store copy'],
+        ['sys', 'reading products/safeyum.md \u2713'],
+        ['out', '"Just say what happened. SafeYum keeps the record."'],
+        ['sys', 'grounded in: audience \u00b7 positioning \u00b7 2 decisions'],
+        ['cmd', 'is gamified onboarding on-brand?'],
+        ['sys', 'reading products/safeyum.md \u2713'],
+        ['warn', 'conflicts with the input-friction decision. recommend against.'],
+        ['cmd', 'agreed. log that.'],
+        ['ok', 'reconcile(safeyum): onboarding stays conversational \u2713']
+      ];
+      var CLS = { cmd: 't-cmd', sys: 't-sys', out: 't-out', warn: 't-warn', ok: 't-ok' };
+      function lineHtml(kind, text) {
+        var prefix = kind === 'cmd' ? '<span class="t-p">&gt;</span> ' : '  ';
+        return prefix + '<span class="' + CLS[kind] + '">' + text.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</span>';
+      }
+      function render(fullCount, partialKind, partialText, caret) {
+        var out = [];
+        for (var i = 0; i < fullCount; i++) out.push(lineHtml(SCRIPT[i][0], SCRIPT[i][1]));
+        if (partialKind) out.push(lineHtml(partialKind, partialText) + (caret ? '<span class="caret"></span>' : ''));
+        body.innerHTML = out.join('\n');
+      }
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        render(SCRIPT.length, null, '', false);
+        return;
+      }
+      var li = 0, ci = 0;
+      function tick() {
+        var line = SCRIPT[li], text = line[1];
+        ci++;
+        render(li, line[0], text.slice(0, ci), true);
+        if (ci >= text.length) {
+          li++; ci = 0;
+          if (li >= SCRIPT.length) {
+            render(SCRIPT.length, null, '', false);
+            setTimeout(function () { li = 0; ci = 0; tick(); }, 3600);
+            return;
+          }
+          setTimeout(tick, line[0] === 'cmd' ? 600 : 280);
+        } else {
+          setTimeout(tick, line[0] === 'cmd' ? 34 : 10);
+        }
+      }
+      tick();
+    })();
     // Install modal
     var overlay = document.getElementById('install-modal');
     var lastFocus = null;
