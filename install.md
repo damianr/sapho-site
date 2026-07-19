@@ -154,3 +154,8 @@ Two rules keep the corpus from rotting:
 - The truth file is the substrate; voice and format of any output are per-request.
 - Renderings (pages, pitches, posts generated from truth files) are disposable outputs —
   never fold their content back in as truth.
+
+---
+
+This spec and the site serving it are open source (MIT):
+https://github.com/damianr/sapho-site — per-surface adapter contributions welcome.

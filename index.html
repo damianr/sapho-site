@@ -59,7 +59,9 @@
     color: var(--text-primary); text-decoration: none;
   }
   .wordmark .stop { color: var(--accent-purple); }
-  .site-note { font-size: 0.72rem; color: var(--text-tertiary); letter-spacing: 0.06em; }
+  .site-note { font-size: 0.72rem; color: var(--text-tertiary); letter-spacing: 0.06em; text-decoration: none; }
+  a.site-note:hover { color: var(--accent-purple); }
+  .faq-item a { color: var(--accent-purple); }
 
   /* ---------- hero ---------- */
   .hero {
@@ -306,7 +308,7 @@
 <div class="wrap">
   <header class="site">
     <a class="wordmark" href="#top">sapho<span class="stop">.</span></a>
-    <span class="site-note">a convention, not an app</span>
+    <a class="site-note" href="https://github.com/damianr/sapho-site">a convention, not an app · open source</a>
   </header>
 
   <div class="hero" id="top">
@@ -434,6 +436,10 @@ tags:       [&lt;...&gt;]
       <div class="faq-item">
         <h3>What does it cost?</h3>
         <p>Nothing. It's files and conventions, not a service.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Is it open source?</h3>
+        <p>Yes, MIT: <a href="https://github.com/damianr/sapho-site">github.com/damianr/sapho-site</a>. Your corpus stays private; the conventions are public.</p>
       </div>
       <div class="faq-item">
         <h3>Where does my data live?</h3>
