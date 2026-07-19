@@ -99,6 +99,13 @@
   }
   button.cta:hover { filter: brightness(1.1); }
   .cta-sub { font-size: 0.8rem; color: var(--text-tertiary); }
+  .cta-ghost {
+    font-family: var(--font); font-size: 0.82rem; letter-spacing: 0.04em;
+    color: var(--text-secondary); border: 1px solid var(--border-default); border-radius: 8px;
+    padding: 0.8rem 1.4rem; text-decoration: none;
+  }
+  .cta-ghost:hover { border-color: var(--accent-purple); color: var(--accent-purple); }
+  .cta-note { font-size: 0.8rem; color: var(--text-tertiary); margin: 1rem 0 0; }
   button:focus-visible, .tab:focus-visible, a:focus-visible, summary:focus-visible {
     outline: 2px solid var(--accent-purple); outline-offset: 2px;
   }
@@ -317,8 +324,9 @@
       <p class="lede reveal d1">Tell it once. It stays told.</p>
       <div class="cta-row reveal d2">
         <button class="cta" type="button" data-open-install>get started</button>
-        <span class="cta-sub">Free. Plain files, on your machine, under your control.</span>
+        <a class="cta-ghost" href="https://github.com/damianr/sapho-site">view on github</a>
       </div>
+      <p class="cta-note reveal d2">Free. Plain files, on your machine, under your control.</p>
     </div>
 
   </div>
