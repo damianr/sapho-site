@@ -145,6 +145,10 @@
 
   .fan { max-width: 36rem; margin-top: 1.5rem; }
   .flow { max-width: 48rem; margin: 0.5rem auto 2.25rem; }
+  .diagram .mock { font-family: var(--font); font-size: 10px; fill: var(--text-secondary); white-space: pre; }
+  .diagram .mock-p { fill: var(--accent-purple); }
+  .diagram .out-name { fill: var(--accent-purple); }
+  .diagram .mock-box { fill: none; stroke: var(--text-tertiary); stroke-width: 1; }
   .diagram .fan-fm { stroke: var(--accent-purple); stroke-width: 3; stroke-linecap: round; }
   .diagram .fan-tx { stroke: var(--text-tertiary); stroke-width: 3; stroke-linecap: round; opacity: 0.5; }
   .fan .dot-out { fill: var(--accent-purple); }
@@ -310,157 +314,106 @@
         talk about it. sapho gives all of it one home your AI actually reads.</p>
     </div>
     <div class="diagram flow">
+      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cycling examples: a prompt goes to your AI, which reads sapho, produces the matching output, and new truth writes back">
+        <path id="fw1" class="wire" d="M180 143 H 308"/>
+        <path id="fw2" class="wire" d="M370 163 L 370 203"/>
+        <path id="fw3" class="wire" d="M430 143 H 578"/>
+        <path id="fw4" class="wire" d="M655 200 C 600 246, 480 254, 413 247"/>
 
-      <!-- v1: pipeline -->
-      <div class="dia-variant" id="dia-v1">
-      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Prompt goes to your AI, which reads sapho, produces the output, and new truth writes back">
-        <path id="p1w1" class="wire" d="M150 143 H 298"/>
-        <path id="p1w2" class="wire" d="M360 163 L 360 203"/>
-        <path id="p1w3" class="wire" d="M420 143 H 588"/>
-        <path id="p1w4" class="wire" d="M645 184 C 590 242, 470 252, 403 247"/>
-        <rect class="hub-circle" x="20" y="111" width="130" height="64" rx="10"/>
-        <text class="brand bstop2" x="36" y="149" font-size="12">&gt;</text>
-        <line class="fan-tx" x1="54" y1="145" x2="134" y2="145"/>
-        <text class="lbl" x="85" y="192" text-anchor="middle">your prompt</text>
-        <rect class="pill" x="300" y="125" width="120" height="36" rx="18"/>
-        <text class="pill-label" x="360" y="147" text-anchor="middle">your AI</text>
-        <text class="lbl" x="360" y="117" text-anchor="middle">claude code · chatgpt · cursor</text>
-        <g class="spin" style="transform-origin: 360px 245px;"><circle class="hub-ring" cx="360" cy="245" r="49"/></g>
-        <circle class="hub-circle" cx="360" cy="245" r="40"/>
-        <text class="brand" x="360" y="250" font-size="14" text-anchor="middle">sapho<tspan class="bstop">.</tspan></text>
-        <rect class="hub-circle" x="590" y="100" width="140" height="84" rx="10"/>
-        <line class="fan-fm" x1="608" y1="122" x2="662" y2="122"/>
-        <line class="fan-tx" x1="608" y1="140" x2="708" y2="140"/>
-        <line class="fan-tx" x1="608" y1="155" x2="694" y2="155"/>
-        <text class="lbl" x="660" y="202" text-anchor="middle">the output</text>
-        <text class="lbl" x="196" y="133">1 · prompt</text>
-        <text class="lbl" x="372" y="190">2 · reads the truth</text>
-        <text class="lbl" x="474" y="133">3 · output</text>
-        <text class="lbl" x="486" y="264">4 · new truth writes back</text>
-        <circle class="dot dot-out" r="3" opacity="0">
-          <animateMotion id="p1s1" dur="1.1s" begin="0.8s;p1s5.end+1.6s"><mpath href="#p1w1"/></animateMotion>
-          <animate attributeName="opacity" values="1" dur="1.1s" begin="p1s1.begin"/>
-        </circle>
-        <circle class="dot dot-req" r="3" opacity="0">
-          <animateMotion id="p1s2" dur="0.8s" begin="p1s1.end+0.1s"><mpath href="#p1w2"/></animateMotion>
-          <animate attributeName="opacity" values="1" dur="0.8s" begin="p1s2.begin"/>
-        </circle>
-        <circle class="dot dot-read" r="3" opacity="0">
-          <animateMotion id="p1s3" dur="0.8s" begin="p1s2.end+0.15s" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#p1w2"/></animateMotion>
-          <animate attributeName="opacity" values="1" dur="0.8s" begin="p1s3.begin"/>
-        </circle>
-        <circle class="dot dot-out" r="3" opacity="0">
-          <animateMotion id="p1s4" dur="1.1s" begin="p1s3.end+0.15s"><mpath href="#p1w3"/></animateMotion>
-          <animate attributeName="opacity" values="1" dur="1.1s" begin="p1s4.begin"/>
-        </circle>
-        <circle class="dot dot-write" r="3" opacity="0">
-          <animateMotion id="p1s5" dur="1.2s" begin="p1s4.end+0.3s"><mpath href="#p1w4"/></animateMotion>
-          <animate attributeName="opacity" values="1" dur="1.2s" begin="p1s5.begin"/>
-        </circle>
-      </svg>
-      <div class="diagram-caption">prompt · <span class="lg-r">reads the truth</span> · output · <span class="lg-w">writes back</span></div>
-      </div>
-
-      <!-- v2: pipeline, output cycles -->
-      <div class="dia-variant" id="dia-v2" hidden>
-      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Same pipeline; the output changes each cycle: code, a screen, a pitch, a plan">
-        <path id="p2w1" class="wire" d="M150 143 H 298"/>
-        <path id="p2w2" class="wire" d="M360 163 L 360 203"/>
-        <path id="p2w3" class="wire" d="M420 143 H 588"/>
-        <path id="p2w4" class="wire" d="M645 184 C 590 242, 470 252, 403 247"/>
-        <rect class="hub-circle" x="20" y="111" width="130" height="64" rx="10"/>
-        <text class="brand bstop2" x="36" y="149" font-size="12">&gt;</text>
-        <line class="fan-tx" x1="54" y1="145" x2="134" y2="145"/>
-        <text class="lbl" x="85" y="192" text-anchor="middle">your prompt</text>
-        <rect class="pill" x="300" y="125" width="120" height="36" rx="18"/>
-        <text class="pill-label" x="360" y="147" text-anchor="middle">your AI</text>
-        <g class="spin" style="transform-origin: 360px 245px;"><circle class="hub-ring" cx="360" cy="245" r="49"/></g>
-        <circle class="hub-circle" cx="360" cy="245" r="40"/>
-        <text class="brand" x="360" y="250" font-size="14" text-anchor="middle">sapho<tspan class="bstop">.</tspan></text>
-        <rect class="hub-circle" x="590" y="100" width="140" height="84" rx="10"/>
-        <line class="fan-fm" x1="608" y1="122" x2="662" y2="122"/>
-        <line class="fan-tx" x1="608" y1="140" x2="708" y2="140"/>
-        <line class="fan-tx" x1="608" y1="155" x2="694" y2="155"/>
-        <text class="lbl" x="654" y="202" text-anchor="end">this time:</text>
-        <g font-weight="500">
-          <text class="lbl out-cycle" x="660" y="202" fill="rgb(168,155,232)">code<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="0s" repeatCount="indefinite"/></text>
-          <text class="lbl out-cycle" x="660" y="202" fill="rgb(168,155,232)" opacity="0">a screen<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="-18s" repeatCount="indefinite"/></text>
-          <text class="lbl out-cycle" x="660" y="202" fill="rgb(168,155,232)" opacity="0">a pitch<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="-12s" repeatCount="indefinite"/></text>
-          <text class="lbl out-cycle" x="660" y="202" fill="rgb(168,155,232)" opacity="0">a plan<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="-6s" repeatCount="indefinite"/></text>
+        <rect class="hub-circle" x="20" y="105" width="160" height="76" rx="10"/>
+        <text class="lbl" x="100" y="198" text-anchor="middle">your prompt</text>
+        <g>
+          <text class="mock" x="36" y="140"><tspan class="mock-p">&gt;</tspan> add a pricing</text>
+          <text class="mock" x="47" y="156">page</text>
+          <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="0s" repeatCount="indefinite"/>
         </g>
+        <g opacity="0">
+          <text class="mock" x="36" y="140"><tspan class="mock-p">&gt;</tspan> write the app</text>
+          <text class="mock" x="47" y="156">store copy</text>
+          <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="-18s" repeatCount="indefinite"/>
+        </g>
+        <g opacity="0">
+          <text class="mock" x="36" y="140"><tspan class="mock-p">&gt;</tspan> is this feature</text>
+          <text class="mock" x="47" y="156">on-brand?</text>
+          <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="-12s" repeatCount="indefinite"/>
+        </g>
+        <g opacity="0">
+          <text class="mock" x="36" y="140"><tspan class="mock-p">&gt;</tspan> plan next</text>
+          <text class="mock" x="47" y="156">quarter</text>
+          <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="-6s" repeatCount="indefinite"/>
+        </g>
+
+        <rect class="pill" x="310" y="125" width="120" height="36" rx="18"/>
+        <text class="pill-label" x="370" y="147" text-anchor="middle">your AI</text>
+        <text class="lbl" x="370" y="117" text-anchor="middle">claude code · chatgpt · cursor</text>
+
+        <g class="spin" style="transform-origin: 370px 245px;"><circle class="hub-ring" cx="370" cy="245" r="49"/></g>
+        <circle class="hub-circle" cx="370" cy="245" r="40"/>
+        <text class="brand" x="370" y="250" font-size="14" text-anchor="middle">sapho<tspan class="bstop">.</tspan></text>
+        <text class="lbl" x="378" y="190">reads the truth</text>
+        <text class="lbl" x="470" y="264">new truth writes back</text>
+
+        <rect class="hub-circle" x="580" y="88" width="160" height="112" rx="10"/>
+        <g>
+          <text class="mock mock-p" x="596" y="116">function Pricing()</text>
+          <text class="mock" x="596" y="134">  return tiers</text>
+          <text class="mock" x="596" y="152">    .map(render)</text>
+          <text class="mock" x="596" y="170">…</text>
+          <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="0s" repeatCount="indefinite"/>
+        </g>
+        <g opacity="0">
+          <line class="fan-fm" x1="596" y1="112" x2="656" y2="112"/>
+          <line class="fan-tx" x1="596" y1="130" x2="722" y2="130"/>
+          <line class="fan-tx" x1="596" y1="146" x2="710" y2="146"/>
+          <line class="fan-tx" x1="596" y1="162" x2="718" y2="162"/>
+          <line class="fan-tx" x1="596" y1="178" x2="668" y2="178"/>
+          <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="-18s" repeatCount="indefinite"/>
+        </g>
+        <g opacity="0">
+          <text class="mock mock-p" x="596" y="118">yes, if it stays</text>
+          <text class="mock" x="596" y="136">conversational;</text>
+          <text class="mock" x="596" y="154">see decision on</text>
+          <text class="mock" x="596" y="172">input friction</text>
+          <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="-12s" repeatCount="indefinite"/>
+        </g>
+        <g opacity="0">
+          <rect class="mock-box" x="596" y="106" width="9" height="9" rx="2"/>
+          <line class="fan-tx" x1="614" y1="111" x2="700" y2="111"/>
+          <rect class="mock-box" x="596" y="130" width="9" height="9" rx="2"/>
+          <line class="fan-tx" x1="614" y1="135" x2="716" y2="135"/>
+          <rect class="mock-box" x="596" y="154" width="9" height="9" rx="2"/>
+          <line class="fan-tx" x1="614" y1="159" x2="688" y2="159"/>
+          <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="-6s" repeatCount="indefinite"/>
+        </g>
+        <g>
+          <text class="lbl out-name" x="660" y="218" text-anchor="middle">the code<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="0s" repeatCount="indefinite"/></text>
+          <text class="lbl out-name" x="660" y="218" text-anchor="middle" opacity="0">the copy<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="-18s" repeatCount="indefinite"/></text>
+          <text class="lbl out-name" x="660" y="218" text-anchor="middle" opacity="0">the answer<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="-12s" repeatCount="indefinite"/></text>
+          <text class="lbl out-name" x="660" y="218" text-anchor="middle" opacity="0">the plan<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="-6s" repeatCount="indefinite"/></text>
+        </g>
+
         <circle class="dot dot-out" r="3" opacity="0">
-          <animateMotion dur="6s" begin="0s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.083;0.25;1" calcMode="linear"><mpath href="#p2w1"/></animateMotion>
+          <animateMotion dur="6s" begin="0s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.083;0.25;1" calcMode="linear"><mpath href="#fw1"/></animateMotion>
           <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.083;0.084;0.249;0.25;1" dur="6s" begin="0s" repeatCount="indefinite"/>
         </circle>
         <circle class="dot dot-req" r="3" opacity="0">
-          <animateMotion dur="6s" begin="0s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.283;0.4;1" calcMode="linear"><mpath href="#p2w2"/></animateMotion>
+          <animateMotion dur="6s" begin="0s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.283;0.4;1" calcMode="linear"><mpath href="#fw2"/></animateMotion>
           <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.283;0.284;0.399;0.4;1" dur="6s" begin="0s" repeatCount="indefinite"/>
         </circle>
         <circle class="dot dot-read" r="3" opacity="0">
-          <animateMotion dur="6s" begin="0s" repeatCount="indefinite" keyPoints="1;1;0;0" keyTimes="0;0.42;0.537;1" calcMode="linear"><mpath href="#p2w2"/></animateMotion>
+          <animateMotion dur="6s" begin="0s" repeatCount="indefinite" keyPoints="1;1;0;0" keyTimes="0;0.42;0.537;1" calcMode="linear"><mpath href="#fw2"/></animateMotion>
           <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.42;0.421;0.536;0.537;1" dur="6s" begin="0s" repeatCount="indefinite"/>
         </circle>
         <circle class="dot dot-out" r="3" opacity="0">
-          <animateMotion dur="6s" begin="0s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.557;0.723;1" calcMode="linear"><mpath href="#p2w3"/></animateMotion>
+          <animateMotion dur="6s" begin="0s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.557;0.723;1" calcMode="linear"><mpath href="#fw3"/></animateMotion>
           <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.557;0.558;0.722;0.723;1" dur="6s" begin="0s" repeatCount="indefinite"/>
         </circle>
         <circle class="dot dot-write" r="3" opacity="0">
-          <animateMotion dur="6s" begin="0s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.773;0.94;1" calcMode="linear"><mpath href="#p2w4"/></animateMotion>
+          <animateMotion dur="6s" begin="0s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.773;0.94;1" calcMode="linear"><mpath href="#fw4"/></animateMotion>
           <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.773;0.774;0.939;0.94;1" dur="6s" begin="0s" repeatCount="indefinite"/>
         </circle>
       </svg>
-      <div class="diagram-caption">same loop, different output every time: <span class="lg-r">the truth stays the source</span></div>
-      </div>
-
-      <!-- v3: foundation -->
-      <div class="dia-variant" id="dia-v3" hidden>
-      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Prompt to AI to output, with sapho as the truth layer underneath">
-        <path id="p3w1" class="wire" d="M150 105 H 298"/>
-        <path id="p3w3" class="wire" d="M420 105 H 588"/>
-        <path id="p3w2" class="wire" d="M360 125 L 360 208"/>
-        <path id="p3w4" class="wire" d="M660 152 L 660 208"/>
-        <rect class="hub-circle" x="20" y="73" width="130" height="64" rx="10"/>
-        <text class="brand bstop2" x="36" y="111" font-size="12">&gt;</text>
-        <line class="fan-tx" x1="54" y1="107" x2="134" y2="107"/>
-        <text class="lbl" x="85" y="154" text-anchor="middle">your prompt</text>
-        <rect class="pill" x="300" y="87" width="120" height="36" rx="18"/>
-        <text class="pill-label" x="360" y="109" text-anchor="middle">your AI</text>
-        <text class="lbl" x="360" y="79" text-anchor="middle">claude code · chatgpt · cursor</text>
-        <rect class="hub-circle" x="590" y="68" width="140" height="84" rx="10"/>
-        <line class="fan-fm" x1="608" y1="90" x2="662" y2="90"/>
-        <line class="fan-tx" x1="608" y1="108" x2="708" y2="108"/>
-        <line class="fan-tx" x1="608" y1="123" x2="694" y2="123"/>
-        <text class="lbl" x="660" y="170" text-anchor="middle">the output</text>
-        <rect class="hub-circle" x="20" y="210" width="710" height="48" rx="12"/>
-        <text class="brand" x="375" y="239" font-size="14" text-anchor="middle">sapho<tspan class="bstop">.</tspan></text>
-        <text class="lbl" x="712" y="239" text-anchor="end">the truth layer</text>
-        <text class="lbl" x="372" y="180">reads</text>
-        <text class="lbl" x="672" y="196">writes back</text>
-        <circle class="dot dot-out" r="3" opacity="0">
-          <animateMotion id="p3s1" dur="1.1s" begin="0.8s;p3s4.end+1.6s"><mpath href="#p3w1"/></animateMotion>
-          <animate attributeName="opacity" values="1" dur="1.1s" begin="p3s1.begin"/>
-        </circle>
-        <circle class="dot dot-read" r="3" opacity="0">
-          <animateMotion id="p3s2" dur="0.9s" begin="p3s1.end+0.1s" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#p3w2"/></animateMotion>
-          <animate attributeName="opacity" values="1" dur="0.9s" begin="p3s2.begin"/>
-        </circle>
-        <circle class="dot dot-out" r="3" opacity="0">
-          <animateMotion id="p3s3" dur="1.1s" begin="p3s2.end+0.15s"><mpath href="#p3w3"/></animateMotion>
-          <animate attributeName="opacity" values="1" dur="1.1s" begin="p3s3.begin"/>
-        </circle>
-        <circle class="dot dot-write" r="3" opacity="0">
-          <animateMotion id="p3s4" dur="0.9s" begin="p3s3.end+0.3s"><mpath href="#p3w4"/></animateMotion>
-          <animate attributeName="opacity" values="1" dur="0.9s" begin="p3s4.begin"/>
-        </circle>
-      </svg>
-      <div class="diagram-caption">everything you make stands on <span class="lg-r">the truth layer</span> · and feeds it</div>
-      </div>
-
-      <div class="dia-dots" role="tablist" aria-label="Animation versions">
-        <button class="dia-dot" type="button" role="tab" aria-selected="true" aria-label="Version 1: pipeline" data-dia="dia-v1"></button>
-        <button class="dia-dot" type="button" role="tab" aria-selected="false" aria-label="Version 2: cycling output" data-dia="dia-v2"></button>
-        <button class="dia-dot" type="button" role="tab" aria-selected="false" aria-label="Version 3: truth layer" data-dia="dia-v3"></button>
-      </div>
+      <div class="diagram-caption">prompt · <span class="lg-r">reads the truth</span> · output · <span class="lg-w">writes back</span></div>
     </div>
     <div class="moves">
       <div class="move">
