@@ -159,33 +159,35 @@
   .diagram .bstop2 { fill: var(--accent-purple); }
 
   /* ---------- visual concepts ---------- */
-  .term { max-width: 40rem; margin: 0.5rem auto 0; border: 1px solid var(--border-default); border-radius: 12px; background: #0c0c11; overflow: hidden; }
-  .term-bar { display: flex; gap: 6px; padding: 10px 14px; border-bottom: 1px solid var(--border-subtle); }
-  .term-bar span { width: 10px; height: 10px; border-radius: 50%; background: var(--bg-elevated); }
-  .term pre { margin: 0; padding: 1.1rem 1.3rem 1.4rem; font-family: var(--font); font-size: 0.78rem; line-height: 1.85; white-space: pre-wrap; min-height: 15rem; }
-  .t-cmd { color: var(--text-primary); } .t-p { color: var(--accent-purple); }
-  .t-sys { color: var(--text-tertiary); } .t-out { color: var(--text-secondary); }
-  .t-ok { color: var(--accent-teal); } .t-warn { color: var(--accent-amber); }
-  .caret { display: inline-block; width: 7px; height: 13px; background: var(--accent-purple); vertical-align: -2px; animation: blink 1s steps(1) infinite; }
-  @keyframes blink { 50% { opacity: 0; } }
-  .vs { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; max-width: 46rem; margin: 0.5rem auto 0; }
-  @media (max-width: 700px) { .vs { grid-template-columns: 1fr; } }
-  .vs .col { border: 1px solid var(--border-subtle); background: var(--bg-card); border-radius: 12px; padding: 1.1rem 1.2rem; }
-  .vs .col h4 { font-size: 0.7rem; letter-spacing: 0.08em; font-weight: 400; margin: 0 0 0.9rem; color: var(--text-tertiary); }
-  .vs .col.good h4 { color: var(--accent-teal); }
-  .bub { border-radius: 10px; padding: 0.55rem 0.8rem; font-size: 0.72rem; line-height: 1.65; margin-bottom: 0.6rem; }
-  .bub.you { background: var(--purple-soft); color: var(--text-primary); }
-  .bub.ai { background: var(--bg-elevated); color: var(--text-secondary); }
-  .bub .dim { color: var(--text-tertiary); font-size: 0.65rem; display: block; margin-top: 0.35rem; }
-  .file { max-width: 34rem; margin: 0.5rem auto 0; border: 1px solid var(--border-subtle); background: #0c0c11; border-radius: 12px; padding: 1.2rem 1.4rem; font-size: 0.74rem; line-height: 2; position: relative; overflow: hidden; }
-  .file .fm-k { color: var(--accent-purple); }
-  .file .h { color: var(--text-primary); }
-  .file .dim { color: var(--text-tertiary); }
-  .file .diff { color: var(--accent-teal); opacity: 0; animation: diffin 10s ease infinite; }
-  @keyframes diffin { 0%, 52% { opacity: 0; } 62%, 92% { opacity: 1; } 100% { opacity: 0; } }
-  .scanline { position: absolute; left: 0; right: 0; height: 2em; background: var(--purple-soft); border-left: 2px solid var(--accent-purple); animation: scan 10s ease-in-out infinite; }
-  @keyframes scan { 0%, 14% { top: 20%; } 24%, 38% { top: 39%; } 48%, 62% { top: 55%; } 72%, 100% { top: 87%; } }
-  @media (prefers-reduced-motion: reduce) { .scanline, .caret { animation: none; } .file .diff { opacity: 1; animation: none; } }
+  .composer { max-width: 34rem; margin: 0.75rem auto 0; border: 1px solid var(--border-default); background: #0c0c11; border-radius: 14px; padding: 1.15rem 1.25rem; }
+  .comp-text { font-size: 0.95rem; color: var(--text-primary); min-height: 1.7em; }
+  .comp-row { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; gap: 1rem; flex-wrap: wrap; }
+  .attach {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    border: 1px solid rgba(168, 155, 232, 0.35); background: var(--purple-soft);
+    border-radius: 999px; padding: 0.32rem 0.8rem; font-size: 0.68rem; color: var(--text-primary);
+    animation: attachpulse 4s ease-in-out infinite;
+  }
+  .attach::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent-purple); flex-shrink: 0; }
+  .attach .dim { color: var(--text-tertiary); }
+  @keyframes attachpulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(168, 155, 232, 0); }
+    50% { box-shadow: 0 0 0 6px rgba(168, 155, 232, 0.07); border-color: rgba(168, 155, 232, 0.6); }
+  }
+  .send { width: 30px; height: 30px; border-radius: 50%; background: var(--accent-purple); color: #08080b; display: inline-flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+  .t-p { color: var(--accent-purple); }
+  .cycle { transition: opacity 0.3s ease; }
+  .cycle.fading { opacity: 0; }
+  .equation { display: flex; align-items: center; justify-content: center; gap: 1.1rem; flex-wrap: wrap; margin: 1.6rem auto 0.5rem; }
+  .eq-box { border: 1px solid var(--border-default); background: var(--bg-card); border-radius: 10px; padding: 0.7rem 1.1rem; font-size: 0.9rem; color: var(--text-secondary); }
+  .eq-sapho { color: var(--text-primary); font-weight: 500; border-color: rgba(168, 155, 232, 0.4); }
+  .eq-op { color: var(--text-tertiary); font-size: 1.1rem; }
+  .eq-result { color: var(--accent-purple); font-size: 0.95rem; min-width: 16ch; }
+  .bigtype { text-align: center; margin: 1.7rem auto 0.6rem; }
+  .bt-1 { font-size: clamp(1.6rem, 3.6vw, 2.3rem); color: var(--text-primary); font-weight: 500; letter-spacing: -0.02em; }
+  .bt-2 { font-size: clamp(1.05rem, 2.4vw, 1.45rem); color: var(--text-secondary); margin-top: 0.5rem; }
+  .bt-c { color: var(--accent-purple); }
+  @media (prefers-reduced-motion: reduce) { .attach { animation: none; } }
 
   /* ---------- sections ---------- */
   section { border-top: 1px solid var(--border-subtle); padding: 3.25rem 0; }
@@ -344,52 +346,39 @@
     </div>
     <div class="flow">
       <div class="dia-variant" id="dia-v1">
-        <div class="term">
-          <div class="term-bar"><span></span><span></span><span></span></div>
-          <pre id="term-body" aria-label="Example session: prompts answered from the truth file"></pre>
+        <div class="composer">
+          <div class="comp-text"><span class="t-p">&gt;</span> <span class="cycle" data-cycle='["add a pricing page","write the App Store copy","is this feature on-brand?","plan next quarter"]'>add a pricing page</span></div>
+          <div class="comp-row">
+            <span class="attach">safeyum.md <span class="dim">· your product&#39;s truth · attached automatically</span></span>
+            <span class="send">&#8593;</span>
+          </div>
         </div>
-        <div class="diagram-caption">a session with the truth attached</div>
+        <div class="diagram-caption">sapho attaches the truth to every prompt, on every surface</div>
       </div>
 
       <div class="dia-variant" id="dia-v2" hidden>
-        <div class="vs">
-          <div class="col">
-            <h4>without sapho</h4>
-            <div class="bub you">write the App Store copy. context: SafeYum is a food journal, um, it's for parents, mainly FPIES families, we pivoted from the trial thing, also the tone should be…</div>
-            <div class="bub ai">Before I draft this: who exactly is the target audience, and how do you usually describe the product?</div>
-            <div class="bub you">…we've been over this six times</div>
-          </div>
-          <div class="col good">
-            <h4>with sapho.</h4>
-            <div class="bub you">write the App Store copy</div>
-            <div class="bub ai">Done. Grounded in your truth file: FPIES families first, "the journal that listens," conversational capture front and center. <span class="dim">read: products/safeyum.md</span></div>
-          </div>
+        <div class="equation">
+          <span class="eq-box"><span class="t-p">&gt;</span> your prompt</span>
+          <span class="eq-op">+</span>
+          <span class="eq-box eq-sapho">sapho<span class="stop">.</span></span>
+          <span class="eq-op">=</span>
+          <span class="eq-result cycle" data-cycle='["code that fits","on-brand copy","answers with receipts","plans that remember why"]'>code that fits</span>
         </div>
-        <div class="diagram-caption">same task · the only difference is <span class="lg-r">the truth file</span></div>
+        <div class="diagram-caption">one file in the equation changes every result</div>
       </div>
 
       <div class="dia-variant" id="dia-v3" hidden>
-        <div class="file">
-          <div class="scanline"></div>
-          <div><span class="dim">---</span></div>
-          <div><span class="fm-k">name:</span> SafeYum</div>
-          <div><span class="fm-k">audience:</span> FPIES families first</div>
-          <div><span class="dim">---</span></div>
-          <div class="h">## Problem &amp; insight</div>
-          <div class="dim">input friction kills food journals; a kept journal finds patterns</div>
-          <div class="h">## Key decisions &amp; rationale</div>
-          <div class="dim">- the AI proposes, the parent confirms</div>
-          <div class="diff">+ trials return as dose ladders (reversed: standard of care won)</div>
-          <div class="h">## Positioning</div>
-          <div class="dim">"the journal that listens"</div>
+        <div class="bigtype">
+          <div class="bt-1">Ask anything.</div>
+          <div class="bt-2">It already knows <span class="cycle bt-c" data-cycle='["your audience.","what you cut.","why you decided.","how you talk."]'>your audience.</span></div>
         </div>
-        <div class="diagram-caption"><span class="lg-r">read by every session</span> · <span class="lg-w">updated by reconcile</span> · one living file</div>
+        <div class="diagram-caption">because it read the truth first</div>
       </div>
 
       <div class="dia-dots" role="tablist" aria-label="Visual versions">
-        <button class="dia-dot" type="button" role="tab" aria-selected="true" aria-label="Version 1: terminal session" data-dia="dia-v1"></button>
-        <button class="dia-dot" type="button" role="tab" aria-selected="false" aria-label="Version 2: with and without" data-dia="dia-v2"></button>
-        <button class="dia-dot" type="button" role="tab" aria-selected="false" aria-label="Version 3: the living file" data-dia="dia-v3"></button>
+        <button class="dia-dot" type="button" role="tab" aria-selected="true" aria-label="Version 1: auto-attached truth" data-dia="dia-v1"></button>
+        <button class="dia-dot" type="button" role="tab" aria-selected="false" aria-label="Version 2: the equation" data-dia="dia-v2"></button>
+        <button class="dia-dot" type="button" role="tab" aria-selected="false" aria-label="Version 3: it already knows" data-dia="dia-v3"></button>
       </div>
     </div>
     <div class="moves">
@@ -582,54 +571,24 @@ tags:       [&lt;...&gt;]
     });
 
 
-    // Terminal session replay
+
+    // Word cyclers
     (function () {
-      var body = document.getElementById('term-body');
-      if (!body) return;
-      var SCRIPT = [
-        ['cmd', 'write the App Store copy'],
-        ['sys', 'reading products/safeyum.md \u2713'],
-        ['out', '"Just say what happened. SafeYum keeps the record."'],
-        ['sys', 'grounded in: audience \u00b7 positioning \u00b7 2 decisions'],
-        ['cmd', 'is gamified onboarding on-brand?'],
-        ['sys', 'reading products/safeyum.md \u2713'],
-        ['warn', 'conflicts with the input-friction decision. recommend against.'],
-        ['cmd', 'agreed. log that.'],
-        ['ok', 'reconcile(safeyum): onboarding stays conversational \u2713']
-      ];
-      var CLS = { cmd: 't-cmd', sys: 't-sys', out: 't-out', warn: 't-warn', ok: 't-ok' };
-      function lineHtml(kind, text) {
-        var prefix = kind === 'cmd' ? '<span class="t-p">&gt;</span> ' : '  ';
-        return prefix + '<span class="' + CLS[kind] + '">' + text.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</span>';
-      }
-      function render(fullCount, partialKind, partialText, caret) {
-        var out = [];
-        for (var i = 0; i < fullCount; i++) out.push(lineHtml(SCRIPT[i][0], SCRIPT[i][1]));
-        if (partialKind) out.push(lineHtml(partialKind, partialText) + (caret ? '<span class="caret"></span>' : ''));
-        body.innerHTML = out.join('\n');
-      }
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        render(SCRIPT.length, null, '', false);
-        return;
-      }
-      var li = 0, ci = 0;
-      function tick() {
-        var line = SCRIPT[li], text = line[1];
-        ci++;
-        render(li, line[0], text.slice(0, ci), true);
-        if (ci >= text.length) {
-          li++; ci = 0;
-          if (li >= SCRIPT.length) {
-            render(SCRIPT.length, null, '', false);
-            setTimeout(function () { li = 0; ci = 0; tick(); }, 3600);
-            return;
-          }
-          setTimeout(tick, line[0] === 'cmd' ? 600 : 280);
-        } else {
-          setTimeout(tick, line[0] === 'cmd' ? 34 : 10);
-        }
-      }
-      tick();
+      var els = Array.prototype.slice.call(document.querySelectorAll('[data-cycle]'));
+      if (!els.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var state = els.map(function (el) {
+        return { el: el, words: JSON.parse(el.getAttribute('data-cycle')), i: 0 };
+      });
+      setInterval(function () {
+        state.forEach(function (s) {
+          s.el.classList.add('fading');
+          setTimeout(function () {
+            s.i = (s.i + 1) % s.words.length;
+            s.el.textContent = s.words[s.i];
+            s.el.classList.remove('fading');
+          }, 320);
+        });
+      }, 3000);
     })();
     // Install modal
     var overlay = document.getElementById('install-modal');
