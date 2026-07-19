@@ -163,6 +163,31 @@
     margin: 2rem 0 2.25rem; letter-spacing: -0.01em;
   }
 
+  /* ---------- system map ---------- */
+  .map { max-width: 40rem; margin: 2rem 0 2.25rem; }
+  .map .layer {
+    display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap;
+    border: 1px solid var(--border-default); background: var(--bg-card);
+    border-radius: 12px; padding: 0.85rem 1.2rem;
+  }
+  .map .layer-k { font-size: 0.72rem; letter-spacing: 0.06em; color: var(--text-tertiary); min-width: 5.5rem; }
+  .map .chips { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .map .chips span {
+    border: 1px solid var(--border-default); background: var(--bg-elevated);
+    border-radius: 999px; padding: 0.22rem 0.75rem; font-size: 0.72rem; color: var(--text-primary);
+  }
+  .map .chips.file span { border-radius: 6px; color: var(--accent-purple); background: var(--purple-soft); border-color: rgba(168, 155, 232, 0.3); }
+  .map .map-mid {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding: 0.55rem 1.2rem; flex-wrap: wrap;
+  }
+  .map .mid-label { font-size: 0.72rem; letter-spacing: 0.06em; color: var(--text-secondary); }
+  .map .arr { font-size: 0.72rem; }
+  .map .arr.read { color: var(--accent-teal); }
+  .map .arr.write { color: var(--accent-coral); }
+  .map .layer.base { margin-top: 0.5rem; border-style: dashed; background: none; }
+  .map .base-t { font-size: 0.72rem; color: var(--text-tertiary); }
+
   /* ---------- sections ---------- */
   section { border-top: 1px solid var(--border-subtle); padding: 3.25rem 0; }
   section .key { display: block; margin-bottom: 1.25rem; }
@@ -333,6 +358,28 @@
   <section>
     <div class="prose">
       <h2>One file per product. Every AI reads it before it writes.</h2>
+    </div>
+    <div class="map">
+      <div class="layer">
+        <span class="layer-k">your AIs</span>
+        <span class="chips"><span>Claude Code</span><span>ChatGPT</span><span>Cursor</span></span>
+      </div>
+      <div class="map-mid">
+        <span class="arr read">&#8595; read the truth first</span>
+        <span class="mid-label">the skills</span>
+        <span class="arr write">&#8593; write decisions back</span>
+      </div>
+      <div class="layer">
+        <span class="layer-k">the truth</span>
+        <span class="chips file"><span>safeyum.md</span><span>soliloquy.md</span><span>realitycheck.md</span></span>
+      </div>
+      <div class="layer base">
+        <span class="layer-k">git</span>
+        <span class="base-t">history &middot; sync &middot; one copy on GitHub, every surface reads it</span>
+      </div>
+    </div>
+
+    <div class="prose">
       <p>A markdown file per product, in a git repo you own. A one-line convention makes
         every AI read it before product work and fold new decisions back in. Installing is
         one prompt; your AI does the rest.</p>
