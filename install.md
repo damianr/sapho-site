@@ -6,6 +6,7 @@ before generating anything about that product. There is no server and no account
 system is a schema, a few conventions, and a git repo the user owns.
 
 spec_version: 6
+license: MIT · provided as-is, no warranty · https://github.com/damianr/sapho-site
 
 ## Step 0 — Detect your capabilities
 
