@@ -314,11 +314,13 @@
         talk about it. sapho gives all of it one home your AI actually reads.</p>
     </div>
     <div class="diagram flow">
-      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cycling examples: a prompt goes to your AI, which reads sapho, produces the matching output, and new truth writes back">
-        <path id="fw1" class="wire" d="M180 143 H 308"/>
-        <path id="fw2" class="wire" d="M370 163 L 370 203"/>
-        <path id="fw3" class="wire" d="M430 143 H 578"/>
-        <path id="fw4" class="wire" d="M655 200 C 600 246, 480 254, 413 247"/>
+      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A prompt goes to your AI surface, which reads sapho, produces the matching output, and new truth writes back">
+        <path id="fw1" class="wire" d="M180 143 H 248"/>
+        <path id="fw2a" class="wire" d="M380 103 C 405 110, 416 124, 429 133"/>
+        <path id="fw2" class="wire" d="M380 143 H 428"/>
+        <path id="fw2c" class="wire" d="M380 183 C 405 176, 416 162, 429 153"/>
+        <path id="fw3" class="wire" d="M512 143 H 578"/>
+        <path id="fw4" class="wire" d="M655 202 C 612 248, 520 230, 484 172"/>
 
         <rect class="hub-circle" x="20" y="105" width="160" height="76" rx="10"/>
         <text class="lbl" x="100" y="198" text-anchor="middle">your prompt</text>
@@ -343,15 +345,21 @@
           <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.25;0.2501;1" dur="24s" begin="-6s" repeatCount="indefinite"/>
         </g>
 
-        <rect class="pill" x="310" y="125" width="120" height="36" rx="18"/>
-        <text class="pill-label" x="370" y="147" text-anchor="middle">your AI</text>
-        <text class="lbl" x="370" y="117" text-anchor="middle">claude code · chatgpt · cursor</text>
+        <rect class="pill" x="250" y="88" width="130" height="30" rx="15"/>
+        <text class="pill-label" x="315" y="107" text-anchor="middle">Claude Code</text>
+        <rect class="pill" x="250" y="128" width="130" height="30" rx="15"/>
+        <text class="pill-label" x="315" y="147" text-anchor="middle">ChatGPT</text>
+        <rect class="pill" x="250" y="168" width="130" height="30" rx="15"/>
+        <text class="pill-label" x="315" y="187" text-anchor="middle">Cursor</text>
 
-        <g class="spin" style="transform-origin: 370px 245px;"><circle class="hub-ring" cx="370" cy="245" r="49"/></g>
-        <circle class="hub-circle" cx="370" cy="245" r="40"/>
-        <text class="brand" x="370" y="250" font-size="14" text-anchor="middle">sapho<tspan class="bstop">.</tspan></text>
-        <text class="lbl" x="378" y="190">reads the truth</text>
-        <text class="lbl" x="470" y="264">new truth writes back</text>
+        <g class="spin" style="transform-origin: 470px 143px;"><circle class="hub-ring" cx="470" cy="143" r="49"/></g>
+        <circle class="hub-circle" cx="470" cy="143" r="40"/>
+        <text class="brand" x="470" y="148" font-size="14" text-anchor="middle">sapho<tspan class="bstop">.</tspan></text>
+
+        <text class="lbl" x="196" y="133">1 · prompt</text>
+        <text class="lbl" x="386" y="127">2 · reads the truth</text>
+        <text class="lbl" x="518" y="133">3 · output</text>
+        <text class="lbl" x="500" y="252">4 · new truth writes back</text>
 
         <rect class="hub-circle" x="580" y="88" width="160" height="112" rx="10"/>
         <g>
@@ -393,24 +401,20 @@
         </g>
 
         <circle class="dot dot-out" r="3" opacity="0">
-          <animateMotion dur="6s" begin="0s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.083;0.25;1" calcMode="linear"><mpath href="#fw1"/></animateMotion>
-          <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.083;0.084;0.249;0.25;1" dur="6s" begin="0s" repeatCount="indefinite"/>
+          <animateMotion dur="6s" begin="0s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.083;0.217;1" calcMode="linear"><mpath href="#fw1"/></animateMotion>
+          <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.083;0.084;0.216;0.217;1" dur="6s" begin="0s" repeatCount="indefinite"/>
         </circle>
         <circle class="dot dot-req" r="3" opacity="0">
-          <animateMotion dur="6s" begin="0s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.283;0.4;1" calcMode="linear"><mpath href="#fw2"/></animateMotion>
-          <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.283;0.284;0.399;0.4;1" dur="6s" begin="0s" repeatCount="indefinite"/>
+          <animateMotion dur="6s" begin="0s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.25;0.35;1" calcMode="linear"><mpath href="#fw2"/></animateMotion>
+          <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.25;0.251;0.349;0.35;1" dur="6s" begin="0s" repeatCount="indefinite"/>
         </circle>
         <circle class="dot dot-read" r="3" opacity="0">
-          <animateMotion dur="6s" begin="0s" repeatCount="indefinite" keyPoints="1;1;0;0" keyTimes="0;0.42;0.537;1" calcMode="linear"><mpath href="#fw2"/></animateMotion>
-          <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.42;0.421;0.536;0.537;1" dur="6s" begin="0s" repeatCount="indefinite"/>
-        </circle>
-        <circle class="dot dot-out" r="3" opacity="0">
-          <animateMotion dur="6s" begin="0s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.557;0.723;1" calcMode="linear"><mpath href="#fw3"/></animateMotion>
-          <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.557;0.558;0.722;0.723;1" dur="6s" begin="0s" repeatCount="indefinite"/>
+          <animateMotion dur="6s" begin="0s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.383;0.517;1" calcMode="linear"><mpath href="#fw3"/></animateMotion>
+          <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.383;0.384;0.516;0.517;1" dur="6s" begin="0s" repeatCount="indefinite"/>
         </circle>
         <circle class="dot dot-write" r="3" opacity="0">
-          <animateMotion dur="6s" begin="0s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.773;0.94;1" calcMode="linear"><mpath href="#fw4"/></animateMotion>
-          <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.773;0.774;0.939;0.94;1" dur="6s" begin="0s" repeatCount="indefinite"/>
+          <animateMotion dur="6s" begin="0s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.6;0.767;1" calcMode="linear"><mpath href="#fw4"/></animateMotion>
+          <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.6;0.601;0.766;0.767;1" dur="6s" begin="0s" repeatCount="indefinite"/>
         </circle>
       </svg>
       <div class="diagram-caption">prompt · <span class="lg-r">reads the truth</span> · output · <span class="lg-w">writes back</span></div>
