@@ -84,9 +84,10 @@ Two rules keep the corpus from rotting:
 
 1. **Corpus repo.** Ask where it should live (default `~/sapho`). Create it as a git repo
    containing `products/`, a README with the schema and the two rules, and a copy of this
-   spec as `CONNECT.md` so other surfaces can attach later. Offer to create a private GitHub
-   remote (e.g. `gh repo create`) — with a remote, chat surfaces like ChatGPT can read and
-   write the same corpus via their GitHub connectors.
+   spec as `CONNECT.md` so other surfaces can attach later. Offer to create a private remote on
+   the user's git host — any host works for agentic tools (GitHub, GitLab, Bitbucket);
+   GitHub currently has the widest AI-connector support, so it's the default for users who
+   want chat surfaces like ChatGPT reading the same corpus.
 2. **User-level conventions.** Append a "Product Source of Truth (sapho)" section to your
    platform's global instruction file (Claude Code: `~/.claude/CLAUDE.md`), stating:
    (a) every product has one truth file at `<corpus>/products/<slug>.md`;
