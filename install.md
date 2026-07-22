@@ -5,7 +5,7 @@ projects. One canonical markdown file per product; every AI the user works with 
 before generating anything about that product. There is no server and no account — the
 system is a schema, a few conventions, and a git repo the user owns.
 
-spec_version: 7
+spec_version: 8
 license: MIT · provided as-is, no warranty · https://github.com/damianr/sapho-site
 
 ## Step 0 — Detect your capabilities
@@ -79,6 +79,15 @@ Two rules keep the corpus from rotting:
 1. **Truth, not state.** Truth files never contain tasks, progress, blockers, or status.
    That belongs in the user's tracker, linked in frontmatter, never replicated.
 2. **One product = one canonical file**, consistent schema.
+
+**Optional todos file (state, behind a wall).** For products too small for a tracker,
+`todos/<slug>.md` holds a flat list of open items, with `tracker: todos/<slug>.md` in the
+SOT frontmatter. Three hard rules: terse imperatives only, no context (durable truth gets
+reconciled into the SOT before a line dies); done = the line is deleted, never archived,
+dated, or checked `[x]` (git history is the archive); empty or absent is the healthy
+state. Capture is ambient: when conversation surfaces actionable intent, offer to append
+terse lines — offer, never auto-write. Other walled sibling file kinds may emerge; each
+needs a distinct purpose and its own hard rules. `products/` alone holds truth.
 
 ## FULL INSTALL (filesystem agents)
 
