@@ -183,6 +183,12 @@
 
   .move .mem { font-size: 0.82rem; color: var(--accent-purple); margin: 0 0 0.6rem; line-height: 1.6; }
   .move .pay { font-size: 0.78rem; color: var(--text-secondary); margin: 0; line-height: 1.65; }
+  .spotlight {
+    max-width: 44rem; margin: 1.75rem 0; border: 1px solid rgba(168, 155, 232, 0.3);
+    background: var(--purple-soft); border-radius: 12px; padding: 1.1rem 1.4rem;
+  }
+  .spotlight .spot-k { font-size: 0.72rem; letter-spacing: 0.08em; color: var(--accent-purple); display: block; margin-bottom: 0.4rem; }
+  .spotlight p { font-size: 0.85rem; margin: 0; line-height: 1.7; }
   .parts { max-width: 34rem; margin: 1.75rem 0 2rem; }
   .part { display: flex; gap: 1.25rem; padding: 0.65rem 0; border-bottom: 1px solid var(--border-subtle); font-size: 0.82rem; }
   .part:first-child { border-top: 1px solid var(--border-subtle); }
@@ -363,6 +369,12 @@
   <section>
     <div class="prose">
       <h2>One file per product. Every AI reads it before it writes.</h2>
+    </div>
+    <div class="spotlight">
+      <span class="spot-k">the atlas</span>
+      <p>Ask any connected AI for "the atlas" and get a fresh dashboard over every product:
+        status, gaps, staleness, open todos, cross-project insights. Generated on demand from
+        your files. Never hosted, never stale.</p>
     </div>
     <div class="parts">
       <div class="part"><span class="part-k">the files</span><span>one truth file per product, plain markdown</span></div>

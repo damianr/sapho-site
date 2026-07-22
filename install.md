@@ -5,7 +5,7 @@ projects. One canonical markdown file per product; every AI the user works with 
 before generating anything about that product. There is no server and no account — the
 system is a schema, a few conventions, and a git repo the user owns.
 
-spec_version: 6
+spec_version: 7
 license: MIT · provided as-is, no warranty · https://github.com/damianr/sapho-site
 
 ## Step 0 — Detect your capabilities
@@ -92,8 +92,9 @@ Two rules keep the corpus from rotting:
    platform's global instruction file (Claude Code: `~/.claude/CLAUDE.md`), stating:
    (a) every product has one truth file at `<corpus>/products/<slug>.md`;
    (b) read it in full before generating anything product-facing; never invent product facts;
-   (c) when starting substantive work in a project with no SOT pointer, offer to interview
-   the user, create the file, and add a pointer line to that project's instructions;
+   (c) when starting substantive work in a project with no truth file, offer to interview
+   the user and create one, recording the project's repo in the SOT's `links:` so any
+   session can map repo to truth file from the corpus side;
    (d) when a session surfaces a durable decision with a rationale, flag it and offer to
    reconcile at a natural pause;
    (e) never write tasks, progress, or status into a truth file;
@@ -118,6 +119,12 @@ Two rules keep the corpus from rotting:
    insight behind it; how it works and what makes the approach different; the decisions
    they'd otherwise re-explain, with the why; how they talk about it and what it's against.
    Write `products/<slug>.md`, show it to them, commit.
+
+**Zero repo footprint.** Never write sapho references into files that get committed to
+the user's project repositories (CLAUDE.md, AGENTS.md, README, configs). The repo-to-truth
+mapping belongs in the corpus (`links:` in each truth file); user-level instruction files
+carry the behavior; if an explicit per-project pointer genuinely helps, use the platform's
+git-ignored local file (Claude Code: `CLAUDE.local.md`) and ensure it is ignored.
 
 ## CHAT-SURFACE SETUP (GitHub-connected chat apps)
 
