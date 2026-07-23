@@ -5,7 +5,7 @@ projects. One canonical markdown file per product; every AI the user works with 
 before generating anything about that product. There is no server and no account — the
 system is a schema, a few conventions, and a git repo the user owns.
 
-spec_version: 8
+spec_version: 9
 license: MIT · provided as-is, no warranty · https://github.com/damianr/sapho-site
 
 ## Step 0 — Detect your capabilities
@@ -150,6 +150,14 @@ git-ignored local file (Claude Code: `CLAUDE.local.md`) and ensure it is ignored
 4. **Writes.** Apply the reconcile rules above and propose edits as commits or pull
    requests — minimal diffs, never a full-file rewrite for a small change. The user merges;
    the merge is the moment a claim becomes truth.
+5. **If your platform can't reach the repo** (no connector, read-only plan, wrong mode):
+   say so plainly and offer the fallback ladder in order — (a) a custom MCP connector to
+   the git host, if the platform supports adding one; (b) the platform's repo connector in
+   whatever mode exposes it (some gate it to research modes); (c) attaching the truth
+   files to a persistent project/space, with an explicit warning that copies go stale and
+   a refresh ritual; (d) asking the user to paste the relevant truth file. Plain-chat
+   surfaces are read-mostly by nature: propose edits as text for the user to carry to a
+   writing surface. Never silently answer ungrounded.
 
 ## Resilience rules (all tiers)
 
