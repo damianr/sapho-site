@@ -22,7 +22,7 @@ projects. One canonical markdown file per product; every AI the user works with 
 before generating anything about that product. There is no server and no account — the
 system is a schema, a few conventions, and a git repo the user owns.
 
-spec_version: 9
+spec_version: 10
 license: MIT · provided as-is, no warranty · https://github.com/damianr/sapho-site
 
 ## Step 0 — Detect your capabilities
@@ -35,9 +35,11 @@ license: MIT · provided as-is, no warranty · https://github.com/damianr/sapho-
 - **You have no tools**: walk the user through the setup conversationally and generate the
   files for them to save.
 
-In every case: before creating or modifying anything, show the user a short plan of every
-file you will touch and get an explicit yes. Merge with existing configuration — never
-overwrite. All steps are idempotent: if a piece already exists, skip it and say so.
+In every case: briefly explain which files the setup will touch. An explicit setup request
+authorizes the necessary local work; do not ask for a second yes. Ask only for missing choices
+or actions outside that authorization, such as creating a remote the user hasn&#x27;t requested.
+Merge with existing configuration — never overwrite it wholesale. Setup is idempotent:
+preserve working pieces, add what&#x27;s missing, and report what changed.
 Never send the user&#x27;s data anywhere they didn&#x27;t direct.
 
 ## Step 1 — Discover before you create (do NOT skip)
@@ -46,7 +48,8 @@ sapho may already be installed — by another AI tool, on another surface, or in
 non-default location. Creating a second corpus is the worst failure mode of this install:
 it silently forks the user&#x27;s truth. So before proposing any plan:
 
-1. **Ask the user first** — one question, always: &quot;Have you used sapho before — on this
+1. **Use the conversation first.** If it already establishes an existing corpus, follow
+   that connection without asking again. Otherwise ask: &quot;Have you used sapho before — on this
    machine, in another AI tool, or on GitHub?&quot; Asking costs one message; forking truth
    costs the whole system.
 2. **Read the user-level instruction files** on this machine (any that exist:
@@ -65,7 +68,7 @@ spec, it&#x27;s newer than any cached copy of this page, and it needs no further
 move the existing one. Instead: pull the latest if it has a git remote and report its
 freshness (last commit date; flag truth files untouched for 45+ days as worth a re-read);
 add YOUR platform&#x27;s conventions pointing at the existing path (section in your instruction
-file, reconcile skill if your platform supports skills); and confirm the connection by
+file, workflow skill entrypoints if your platform supports skills); and confirm the connection by
 listing the products you can now see. If the corpus has no GitHub remote yet, offer to add
 one so the user&#x27;s other surfaces can reach it.
 
@@ -81,7 +84,7 @@ name:       &lt;product name&gt;
 one_liner:  &lt;one sentence: what it is&gt;
 audience:   &lt;who it&#x27;s for&gt;
 status:     exploring | building | live | paused
-tracker:    &lt;link to tracker project — operational state lives THERE&gt;
+tracker:    &lt;tracker project link or todos/&lt;slug&gt;.md&gt;
 links:      &lt;optional: repo, domains&gt;
 tags:       [&lt;...&gt;]
 ---
@@ -109,8 +112,11 @@ needs a distinct purpose and its own hard rules. `products/` alone holds truth.
 ## FULL INSTALL (filesystem agents)
 
 1. **Corpus repo.** Ask where it should live (default `~/sapho`). Create it as a git repo
-   containing `products/`, a README with the schema and the two rules, and a copy of this
-   spec as `CONNECT.md` so other surfaces can attach later. Offer to create a private remote on
+   containing `products/`, `todos/`, a README with the schema and the two rules, and
+   `CONNECT.md` with the resolved corpus location, user&#x27;s chosen sync/push policy,
+   truth/state rules, and paths to the corpus workflow rubrics below. CONNECT is a local
+   connection guide, not another copy of this discovery/install procedure. If there is no
+   remote, work locally and say so; never attempt to pull from a nonexistent remote. Offer to create a private remote on
    the user&#x27;s git host — any host works for agentic tools (GitHub, GitLab, Bitbucket);
    GitHub currently has the widest AI-connector support, so it&#x27;s the default for users who
    want chat surfaces like ChatGPT reading the same corpus.
@@ -124,27 +130,39 @@ needs a distinct purpose and its own hard rules. `products/` alone holds truth.
    (d) when a session surfaces a durable decision with a rationale, flag it and offer to
    reconcile at a natural pause;
    (e) never write tasks, progress, or status into a truth file;
-   (f) when a question spans several products (overview, portfolio, prioritization,
-   what&#x27;s stale), read ALL truth files and offer a synthesized &quot;atlas&quot; view — a dashboard
-   artifact if the platform can render one, structured text otherwise. Always generated
-   fresh; never hosted or cached.
-3. **Reconcile skill.** Install a user-level skill/command named `reconcile` (Claude Code:
-   `~/.claude/skills/reconcile/SKILL.md`) with these judgment rules — break input into
-   claims, classify each:
-   - **confirms** — already captured; no edit.
-   - **new truth** — durable and absent; add to the one section it belongs in.
-   - **evolves** — refines what&#x27;s there; rewrite in place, don&#x27;t append a duplicate.
-   - **conflicts** — surface to the user (&quot;the SOT says X, this says Y&quot;); never silently
-     overwrite; record instructive reversals as decisions with the why.
-   - **state** — progress/tasks/blockers; reject and point to the tracker.
-   - **noise** — drop.
-   Durability test: still true and worth knowing in six months? Minimal edits only;
-   decisions require a rationale; commit as `reconcile(&lt;product&gt;): &lt;summary&gt;`; never push
-   without the user&#x27;s say-so.
-4. **First product.** Interview the user about one product: the problem and the non-obvious
-   insight behind it; how it works and what makes the approach different; the decisions
-   they&#x27;d otherwise re-explain, with the why; how they talk about it and what it&#x27;s against.
-   Write `products/&lt;slug&gt;.md`, show it to them, commit.
+   (f) for portfolio/focus questions, including outside a project, use `sapho-review`;
+   (g) for a new idea, use `sapho-capture`; no project repo is required;
+   (h) offer `atlas` when a visual overview would help. Discover products from `products/`,
+   never a fixed list. All portfolio reviews read the full corpus and linked open work;
+   distinguish recorded intent, current evidence, and inference.
+3. **Corpus rubrics and user-level entrypoints.** Download these plain Markdown rubrics
+   during the authorized install from this public conventions repository and store them at
+   `&lt;corpus&gt;/.claude/skills/&lt;name&gt;/SKILL.md` (the location works for every client):
+   - [reconcile](https://raw.githubusercontent.com/damianr/sapho-site/main/skills/reconcile/SKILL.md)
+     — fold durable decisions into truth and review every existing open tracker item.
+   - [sapho-review](https://raw.githubusercontent.com/damianr/sapho-site/main/skills/sapho-review/SKILL.md)
+     — recommend attention, decisions, and a bounded next action with evidence.
+   - [sapho-capture](https://raw.githubusercontent.com/damianr/sapho-site/main/skills/sapho-capture/SKILL.md)
+     — guide a short idea conversation and save confirmed intent with explicit unknowns.
+   - [atlas](https://raw.githubusercontent.com/damianr/sapho-site/main/skills/atlas/SKILL.md)
+     — optional fresh visual overview, not required for conversational review.
+   At the client&#x27;s user-level skill directory (Claude: `~/.claude/skills/`; Codex:
+   `~/.codex/skills/`), create short SKILL.md entrypoints with the corresponding rubric&#x27;s
+   YAML name/description, the resolved corpus path, and instructions to read CONNECT and
+   that rubric in full. Do not maintain separate substantive copies for each client.
+   Record in CONNECT that local rubrics govern these workflows and the configured
+   sync/push policy overrides the rubric&#x27;s default. Reviews are read-only; capture doesn&#x27;t
+   imply building. Existing tasks can be rewritten or removed when a decision proves them
+   obsolete, but task completion needs evidence. Preserve newer or ambiguous intent.
+   Respect existing installations: do not overwrite custom rubrics on reconnect. Updates
+   are deliberate and user-authorized, never a silent fetch of live web instructions.
+4. **First product.** Use sapho-capture for one real idea or product. Capture the problem,
+   proposed approach, actual decisions and rationale; label unknowns. No repo, commercial
+   thesis, or final name is required. Save a useful partial capture if the user stops early.
+   Show it, commit, and follow the sync policy selected for this corpus.
+5. **Check the connection.** From outside the corpus directory, verify each installed
+   entrypoint resolves its rubric. Parse the YAML frontmatter and check referenced paths.
+   Report which workflows are available and which require tools the current client lacks.
 
 **Zero repo footprint.** Never write sapho references into files that get committed to
 the user&#x27;s project repositories (CLAUDE.md, AGENTS.md, README, configs). The repo-to-truth
@@ -160,11 +178,11 @@ git-ignored local file (Claude Code: `CLAUDE.local.md`) and ensure it is ignored
 2. **Standing rule.** Chat apps have no folder context, so register this in your persistent
    layer (custom instructions, memory, or Project instructions): *&quot;The user keeps a source
    of truth for their projects at &lt;repo&gt;. When one of these projects comes up by name —
-   &lt;list the slugs from products/&gt; — read its truth file before answering, and never invent
-   product facts.&quot;* Refresh the slug list when products are added.
+   discover current names from products/ — read its truth file before answering, and never
+   invent product facts. Use the corpus review rubric for portfolio/focus questions.&quot;*
 3. **Reads.** Fetch `products/&lt;slug&gt;.md` via the GitHub connector before answering questions
    about that product.
-4. **Writes.** Apply the reconcile rules above and propose edits as commits or pull
+4. **Writes.** Read and apply the corpus reconcile rubric and propose edits as commits or pull
    requests — minimal diffs, never a full-file rewrite for a small change. The user merges;
    the merge is the moment a claim becomes truth.
 5. **If your platform can&#x27;t reach the repo** (no connector, read-only plan, wrong mode):
@@ -187,7 +205,7 @@ git-ignored local file (Claude Code: `CLAUDE.local.md`) and ensure it is ignored
   which step and continue with the rest. Never respond to a tool failure by silently
   starting over or switching modes.
 - **Tool failures never lower the bar.** A broken fetch or search is not a reason to
-  skip discovery, skip the plan-approval step, or guess at file contents.
+  skip discovery, exceed the user&#x27;s authorization, or guess at file contents.
 - **Prefer local over remote.** Once a corpus is on the machine, its own files
   (CONNECT.md, README) outrank this page for that machine.
 
@@ -204,7 +222,4 @@ This spec and the site serving it are open source (MIT):
 https://github.com/damianr/sapho-site — per-surface adapter contributions welcome.
 
 </pre>
-</main>
-<!-- Vercel Web Analytics: cookieless, first-party. Feeds rebman.dev/analytics. -->
-<script defer src="/_vercel/insights/script.js"></script>
-</body></html>
+</main></body></html>
